@@ -9,5 +9,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::get('/me', 'UserController@profile')->name('users.profile');
+    Route::put('/me', 'UserController@updateProfile')->name('users.update-profile');
+
     Route::get('/logout', 'LoginController@logout')->name('auth.logout');
 });
