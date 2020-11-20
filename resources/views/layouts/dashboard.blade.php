@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   @yield('css')
 </head>
@@ -30,13 +31,13 @@
             <i class="far fa-user"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-            <span class="dropdown-item dropdown-header">Nama Admin</span>
+            <span class="dropdown-item dropdown-header">{{ auth()->user()->name }}</span>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+            <a href="{{ route('users.profile') }}" class="dropdown-item">
               <i class="fas fa-cog mr-2"></i> Edit Profil
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+            <a href="{{ route('auth.logout') }}" class="dropdown-item">
               <i class="fas fa-sign-out-alt mr-2"></i> Keluar
             </a>
           </div>
@@ -138,11 +139,10 @@
 
   </div>
 
-  <div id="loader" class="show fullscreen">
-    <svg class="circular" width="48px" height="48px">
-      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
-    </svg>
+  <div class="wrapper-loading" id="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -155,6 +155,7 @@
   <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
   @yield('js')
 </body>
 </html>

@@ -24,4 +24,11 @@ class LoginController extends Controller
 
         return response()->json($result);
     }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('auth.index');
+    }
 }

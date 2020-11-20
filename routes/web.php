@@ -7,4 +7,7 @@ Route::post('/authentication', 'LoginController@authentication')->name('auth.log
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+    Route::get('/me', 'UserController@profile')->name('users.profile');
+    Route::get('/logout', 'LoginController@logout')->name('auth.logout');
 });
