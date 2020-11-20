@@ -1,0 +1,15 @@
+.wrapper-loading {
+  position: absolute; 
+  background: #fff; 
+  z-index: 998;
+  height: 100%;
+  width: 100%;
+}
+.wrapper-loading .spinner-border {
+  position: fixed;
+  z-index: 999;
+  height: 3rem;
+  width: 3rem;
+  left: 50%;
+  top: 50%;
+}
