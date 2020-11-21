@@ -16,11 +16,11 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   @yield('css')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed accent-navy">
+<body class="hold-transition sidebar-mini layout-fixed accent-blue">
   <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-dark navbar-navy text-sm">
+    <nav class="main-header navbar navbar-expand navbar-light navbar-white">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -48,28 +48,58 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-light-navy elevation-4">
+    <aside class="main-sidebar sidebar-dark-blue elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link text-sm navbar-white">
+      <a href="index3.html" class="brand-link navbar-dark">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
       </a>
 
       <!-- Sidebar -->
       <div class="sidebar">
         <nav class="mt-3">
-          <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-              <a href="{{ route('dashboard') }}" class="nav-link active">
+              <a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('dashboard')) active @endif">
                 <i class="nav-icon fas fa-columns"></i>
                 <p>Dashboard</p>
               </a>
             </li>
 
             <li class="nav-header">DATA</li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('profil-irigasi')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Profil Irigasi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('lampiran-irigasi')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Lampiran Irigasi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('tanaman-pangan')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Tanaman Pangan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Kepemilikan Lahan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('kepemilikan-hewan')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Kepemilikan Hewan</p>
+              </a>
+            </li>
 
             <li class="nav-header">PENGATURAN</li>
             <li class="nav-item">
-              <a href="{{ route('quarters.index') }}" class="nav-link">
+              <a href="{{ route('quarters.index') }}" class="nav-link @if(request()->is('kuartal')) active @endif">
                 <i class="nav-icon fas fa-swatchbook"></i>
                 <p>Kuartal</p>
               </a>
