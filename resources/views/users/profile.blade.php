@@ -8,56 +8,54 @@
   <div class="card-header">
     <h5 class="card-title">Profil</h5>
   </div>
-  <div class="card-body">
-    <form id="form">
-      @method('put')
-      <div class="card-body">
-        <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">Nama Lengkap <span class="text-danger">*</span></label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control w-50" name="name" id="name" placeholder="Masukan nama lengkap" value="{{ $user->name }}">
-            <small class="text-danger" id="error-name"></small>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="birth_date" class="col-sm-2 col-form-label">Tanggal Lahir <span class="text-danger">*</span></label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control w-25" name="birth_date" id="birth_date" placeholder="Pilih tanggal lahir" value="{{ \Carbon\Carbon::parse($user->birth_date)->format('Y-m-d') }}">
-            <small class="text-danger" id="error-birth_date"></small>
-          </div>
-        </div>
-        <div class="form-group row pt-2 pb-3">
-          <label for="username" class="col-sm-2 col-form-label">Username <span class="text-danger">*</span></label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control w-50" name="username" id="username" placeholder="Masukan username" value="{{ $user->username }}">
-            <small class="text-danger" id="error-username"></small>
-          </div>
-        </div>
-        <hr>
-        <h5>Ubah Password</h5>
-        <div class="form-group row">
-          <label for="password_old" class="col-sm-2 col-form-label">Password lama <span class="text-danger">*</span></label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control w-50" name="password_old" id="password_old" placeholder="Masukan password lama">
-            <small class="text-danger" id="error-password_old"></small>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="password" class="col-sm-2 col-form-label">Password Baru <span class="text-danger">*</span></label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control w-50" name="password" id="password" placeholder="Masukan password baru">
-            <small class="text-danger" id="error-password"></small>
-          </div>
+  <form id="form">
+    @method('put')
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Nama Lengkap <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control w-50" name="name" id="name" placeholder="Masukan nama lengkap" value="{{ $user->name }}">
+          <small class="text-danger" id="error-name"></small>
         </div>
       </div>
-      <div class="card-footer">
-        <span class="text-muted"><strong class="text-danger">*</strong> Data wajib diisi.</span>
-        <div class="float-right">
-          <button type="submit" class="btn btn-success">Perbaharui</button> 
+      <div class="form-group row">
+        <label for="birth_date" class="col-sm-2 col-form-label">Tanggal Lahir <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control w-25" name="birth_date" id="birth_date" placeholder="Pilih tanggal lahir" value="{{ \Carbon\Carbon::parse($user->birth_date)->format('Y-m-d') }}">
+          <small class="text-danger" id="error-birth_date"></small>
         </div>
       </div>
-    </form>    
-  </div>
+      <div class="form-group row pt-2 pb-3">
+        <label for="username" class="col-sm-2 col-form-label">Username <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control w-50" name="username" id="username" placeholder="Masukan username" value="{{ $user->username }}">
+          <small class="text-danger" id="error-username"></small>
+        </div>
+      </div>
+      <hr>
+      <h5>Ubah Password</h5>
+      <div class="form-group row">
+        <label for="password_old" class="col-sm-2 col-form-label">Password lama <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control w-50" name="password_old" id="password_old" placeholder="Masukan password lama">
+          <small class="text-danger" id="error-password_old"></small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-sm-2 col-form-label">Password Baru <span class="text-danger">*</span></label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control w-50" name="password" id="password" placeholder="Masukan password baru">
+          <small class="text-danger" id="error-password"></small>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="text-muted"><strong class="text-danger">*</strong> Data wajib diisi.</span>
+      <div class="float-right">
+        <button type="submit" class="btn btn-success">Perbaharui</button> 
+      </div>
+    </div>
+  </form>    
 </div>
 @endsection
 
