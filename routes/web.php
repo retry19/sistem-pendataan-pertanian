@@ -3,13 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'LoginController@index')->name('auth.index');
-Route::post('/authentication', 'LoginController@authentication')->name('auth.login');
+Route::post('authentication', 'LoginController@authentication')->name('auth.login');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::get('/me', 'UserController@profile')->name('users.profile');
-    Route::put('/me', 'UserController@updateProfile')->name('users.update-profile');
+    Route::get('kuartal', 'QuarterController@index')->name('quarters.index');
+    Route::get('kuartal/{quarter}', 'QuarterController@active')->name('quarters.active');
 
-    Route::get('/logout', 'LoginController@logout')->name('auth.logout');
+    Route::get('me', 'UserController@profile')->name('users.profile');
+    Route::put('me', 'UserController@updateProfile')->name('users.update-profile');
+
+    Route::get('logout', 'LoginController@logout')->name('auth.logout');
 });
