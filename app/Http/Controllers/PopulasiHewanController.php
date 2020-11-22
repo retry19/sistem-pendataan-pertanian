@@ -21,20 +21,20 @@ class PopulasiHewanController extends Controller
                 ->addIndexColumn()
                 ->editColumn('hewan_id', fn($row) => $row->hewan->nama)
                 ->editColumn('user_id', fn($row) => $row->user->name)
-                ->addColumn('awal_jan', fn($row) => $this->decodeToGender($row->populasi_awal, true))
-                ->addColumn('awal_bet', fn($row) => $this->decodeToGender($row->populasi_awal))
-                ->addColumn('lahir_jan', fn($row) => $this->decodeToGender($row->lahir, true))
-                ->addColumn('lahir_bet', fn($row) => $this->decodeToGender($row->lahir))
-                ->addColumn('dipotong_jan', fn($row) => $this->decodeToGender($row->dipotong, true))
-                ->addColumn('dipotong_bet', fn($row) => $this->decodeToGender($row->dipotong))
-                ->addColumn('mati_jan', fn($row) => $this->decodeToGender($row->mati, true))
-                ->addColumn('mati_bet', fn($row) => $this->decodeToGender($row->mati))
-                ->addColumn('masuk_jan', fn($row) => $this->decodeToGender($row->masuk, true))
-                ->addColumn('masuk_bet', fn($row) => $this->decodeToGender($row->masuk))
-                ->addColumn('keluar_jan', fn($row) => $this->decodeToGender($row->keluar, true))
-                ->addColumn('keluar_bet', fn($row) => $this->decodeToGender($row->keluar))
-                ->addColumn('akhir_jan', fn($row) => $this->decodeToGender($row->populasi_akhir, true))
-                ->addColumn('akhir_bet', fn($row) => $this->decodeToGender($row->populasi_akhir))
+                ->addColumn('awal_jan', fn($row) => $row->populasi_awal['jantan'])
+                ->addColumn('awal_bet', fn($row) => $row->populasi_awal['betina'])
+                ->addColumn('lahir_jan', fn($row) => $row->lahir['jantan'])
+                ->addColumn('lahir_bet', fn($row) => $row->lahir['betina'])
+                ->addColumn('dipotong_jan', fn($row) => $row->dipotong['jantan'])
+                ->addColumn('dipotong_bet', fn($row) => $row->dipotong['betina'])
+                ->addColumn('mati_jan', fn($row) => $row->mati['jantan'])
+                ->addColumn('mati_bet', fn($row) => $row->mati['betina'])
+                ->addColumn('masuk_jan', fn($row) => $row->masuk['jantan'])
+                ->addColumn('masuk_bet', fn($row) => $row->masuk['betina'])
+                ->addColumn('keluar_jan', fn($row) => $row->keluar['jantan'])
+                ->addColumn('keluar_bet', fn($row) => $row->keluar['betina'])
+                ->addColumn('akhir_jan', fn($row) => $row->populasi_akhir['jantan'])
+                ->addColumn('akhir_bet', fn($row) => $row->populasi_akhir['betina'])
                 ->addColumn('action', function($row) {
                     $btnEdit = "<button type=\"button\" class=\"btn btn-sm btn-info rounded-lg button-edit\" data-id=\"{$row->id}\" onclick=\"onClickEdit(event)\"><i class=\"fas fa-edit\" data-id=\"{$row->id}\"></i></button> ";
                     $btnDelete = "<button type=\"button\" class=\"btn btn-sm btn-danger rounded-lg button-delete\" data-id=\"{$row->id}\" onclick=\"onClickDelete(event)\"><i class=\"fas fa-trash\" data-id=\"{$row->id}\"></i></button>";
@@ -81,37 +81,45 @@ class PopulasiHewanController extends Controller
 
         $populasiHewan = [
             'hewan_id' => $request->hewan_id,
-            'populasi_awal' => json_encode([
+            'populasi_awal' => [
                 'jantan' => $request->populasi_awal_jantan,
                 'betina' => $request->populasi_awal_betina
-            ]),
-            'lahir' => json_encode([
+            ],
+            'lahir' => [
                 'jantan' => $request->jumlah_lahir_jantan,
                 'betina' => $request->jumlah_lahir_betina
-            ]),
-            'dipotong' => json_encode([
+            ],
+            'dipotong' => [
                 'jantan' => $request->jumlah_dipotong_jantan,
                 'betina' => $request->jumlah_dipotong_betina
-            ]),
-            'mati' => json_encode([
+            ],
+            'mati' => [
                 'jantan' => $request->jumlah_mati_jantan,
                 'betina' => $request->jumlah_mati_betina
-            ]),
-            'masuk' => json_encode([
+            ],
+            'masuk' => [
                 'jantan' => $request->jumlah_masuk_jantan,
                 'betina' => $request->jumlah_masuk_betina
-            ]),
-            'keluar' => json_encode([
-                'jantan' => $request->jumlah_masuk_keluar,
-                'betina' => $request->jumlah_masuk_betina
-            ]),
-            'populasi_akhir' => json_encode($populasiAkhir),
+            ],
+            'keluar' => [
+                'jantan' => $request->jumlah_keluar_jantan,
+                'betina' => $request->jumlah_keluar_betina
+            ],
+            'populasi_akhir' => $populasiAkhir,
             'tahun' => $request->tahun,
             'user_id' => Auth::id(),
             'kuartal_id' => Quarter::getIdActived()
         ];
 
         PopulasiHewan::create($populasiHewan);
+        $result['status'] = true;
+
+        return response()->json($result);
+    }
+
+    public function edit(PopulasiHewan $populasiHewan)
+    {
+        $result['data'] = $populasiHewan;
         $result['status'] = true;
 
         return response()->json($result);

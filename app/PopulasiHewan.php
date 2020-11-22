@@ -12,6 +12,16 @@ class PopulasiHewan extends Model
         'hewan_id', 'populasi_awal', 'lahir', 'dipotong', 'mati', 'masuk', 'keluar', 'populasi_akhir', 'tahun', 'user_id', 'kuartal_id',
     ];
 
+    protected $casts = [
+        'populasi_awal' => 'array',
+        'lahir' => 'array',
+        'dipotong' => 'array',
+        'mati' => 'array',
+        'masuk' => 'array',
+        'keluar' => 'array',
+        'populasi_akhir' => 'array',
+    ];
+
     public function hewan()
     {
         return $this->belongsTo(Hewan::class);

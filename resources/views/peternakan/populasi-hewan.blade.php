@@ -305,8 +305,8 @@
       .then(res => res.json())
       .then(data => {
         if (data.status) {
-          let hewan = data.hewan;
-          document.getElementById('nama').value = hewan.nama ?? '';
+          let data = data.data;
+          document.getElementById('nama').value = data.nama ?? '';
         }
     });
 
