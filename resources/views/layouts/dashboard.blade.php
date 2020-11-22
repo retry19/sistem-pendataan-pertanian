@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   @yield('css')
@@ -93,7 +94,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('hewan')) active @endif">
+              <a href="{{ route('hewan.index') }}" class="nav-link @if(request()->is('hewan')) active @endif">
                 <i class="nav-icon fas fa-paw"></i>
                 <p>Daftar Hewan</p>
               </a>
@@ -174,6 +175,8 @@
   <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
   <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
   <script src="{{ asset('js/app.js?v=0.1') }}"></script>
   @yield('js')

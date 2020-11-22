@@ -8,6 +8,13 @@ let headers = {
   'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
 };
 
+let headersJSON = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json, text-plain, */*',
+  'X-Requested-With': 'XMLHttpRequest',
+  'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
+};
+
 function removeClassNameByClass(className, classToRemove){
   let elements = document.getElementsByClassName(className);
   for (const element of elements) {
@@ -39,10 +46,12 @@ function loadImage(event) {
 // Fungsi untuk menghapus seluruh value dari input
 // Menghapus preview image
 function clearAllInput() {
-  document.getElementById('preview-image').style.display = 'none';
-  document.getElementById('preview-image-output').src = '';
+  if (document.getElementById('preview-image')) {
+    document.getElementById('preview-image').style.display = 'none';
+    document.getElementById('preview-image-output').src = '';
+    document.getElementById('image').value = '';
+  }
   
-  document.getElementById('image').value = '';
   let elements = document.getElementsByClassName('form-control');
   for (const element of elements) 
     element.value = null;
