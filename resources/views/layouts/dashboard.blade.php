@@ -67,21 +67,9 @@
 
             <li class="nav-header">DATA</li>
             <li class="nav-item">
-              <a href="{{ route('profil-irigasi.index') }}" class="nav-link @if(request()->is('profil-irigasi*')) active @endif">
-                <i class="nav-icon fas fa-book"></i>
-                <p>Profil Irigasi</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('lampiran-irigasi')) active @endif">
-                <i class="nav-icon fas fa-book"></i>
-                <p>Lampiran Irigasi</p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('tanaman-pangan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
-                <p>Tanaman Pangan</p>
+                <p>Tanaman dan Peternakan</p>
               </a>
             </li>
             <li class="nav-item">
@@ -94,6 +82,20 @@
               <a href="" class="nav-link @if(request()->is('kepemilikan-hewan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
                 <p>Kepemilikan Hewan</p>
+              </a>
+            </li>
+
+            <li class="nav-header">LIST</li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('tanaman')) active @endif">
+                <i class="nav-icon fas fa-seedling"></i>
+                <p>Daftar Tanaman</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link @if(request()->is('hewan')) active @endif">
+                <i class="nav-icon fas fa-paw"></i>
+                <p>Daftar Hewan</p>
               </a>
             </li>
 
