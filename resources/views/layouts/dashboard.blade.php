@@ -67,11 +67,19 @@
             </li>
 
             <li class="nav-header">DATA</li>
-            <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('tanaman-pangan')) active @endif">
+            <li class="nav-item has-treeview @if(request()->is('peternakan*')) menu-open @endif">
+              <a href="" class="nav-link @if(request()->is('peternakan*')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
-                <p>Tanaman dan Peternakan</p>
+                <p>Peternakan <i class="right fas fa-angle-left"></i></p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('populasi-hewan.index') }}" class="nav-link @if(request()->is('peternakan/populasi-hewan*')) active @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Populasi</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
@@ -90,13 +98,13 @@
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('tanaman')) active @endif">
                 <i class="nav-icon fas fa-seedling"></i>
-                <p>Daftar Tanaman</p>
+                <p>Tanaman</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('hewan.index') }}" class="nav-link @if(request()->is('hewan')) active @endif">
                 <i class="nav-icon fas fa-paw"></i>
-                <p>Daftar Hewan</p>
+                <p>Hewan</p>
               </a>
             </li>
 

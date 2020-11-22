@@ -10,4 +10,14 @@ class Quarter extends Model
     protected $fillable = [
         'section', 'is_active',
     ];
+
+    public static function getIdActived()
+    {
+        $quarter = self::firstWhere('is_active', true);
+        if (!$quarter) {
+            return 0;
+        }
+
+        return $quarter->id;
+    }
 }
