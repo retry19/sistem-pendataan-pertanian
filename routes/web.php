@@ -8,6 +8,15 @@ Route::post('authentication', 'LoginController@authentication')->name('auth.logi
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
+    Route::group([
+        'as' => 'profil-irigasi.',
+        'prefix' => 'profil-irigasi',
+    ], function () {
+        Route::get('/', 'ProfilIrigasiController@index')->name('index');
+        Route::get('kondisi-umum', 'ProfilIrigasiController@kondisiUmum')->name('kondisi-umum.index');
+        Route::put('kondisi-umum', 'ProfilIrigasiController@kondisiUmumUpdate')->name('kondisi-umum.update');
+    });
+
     Route::get('kuartal', 'QuarterController@index')->name('quarters.index');
     Route::get('kuartal/{quarter}', 'QuarterController@active')->name('quarters.active');
 

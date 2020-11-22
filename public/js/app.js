@@ -10,14 +10,18 @@ let headers = {
 
 function removeClassNameByClass(className, classToRemove){
   let elements = document.getElementsByClassName(className);
-  for (const element of elements) 
-    element.classList.remove(classToRemove);
+  for (const element of elements) {
+    if (element.classList && element.classList.contains(classToRemove)) {
+      element.classList.remove(classToRemove);
+    }
+  }
 }
 
 function removeInnerHTMLByIds(Ids, isError = false){
-  Ids.forEach(id => 
-    document.getElementById(isError ? `error-${id}` : id).innerHTML = ''
-  );
+  Ids.forEach(id => {
+    if (document.getElementById(isError ? `error-${id}` : id))
+      document.getElementById(isError ? `error-${id}` : id).innerHTML = '';
+  });
 }
 
 // Fungsi untuk preview image

@@ -67,7 +67,7 @@
 
             <li class="nav-header">DATA</li>
             <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('profil-irigasi')) active @endif">
+              <a href="{{ route('profil-irigasi.index') }}" class="nav-link @if(request()->is('profil-irigasi*')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
                 <p>Profil Irigasi</p>
               </a>
@@ -173,7 +173,7 @@
   <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/app.js?v=0.1') }}"></script>
   @yield('js')
 </body>
 </html>
