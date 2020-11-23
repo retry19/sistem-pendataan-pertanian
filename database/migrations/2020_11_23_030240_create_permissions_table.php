@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuartersTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class CreateQuartersTable extends Migration
      */
     public function up()
     {
-        Schema::create('quarters', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('section');
-            $table->boolean('is_active');
+            $table->string('title');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateQuartersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quarters');
+        Schema::dropIfExists('permissions');
     }
 }

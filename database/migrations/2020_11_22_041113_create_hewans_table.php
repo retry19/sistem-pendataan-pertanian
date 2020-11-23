@@ -18,14 +18,6 @@ class CreateHewansTable extends Migration
             $table->increments('id');
             $table->string('nama', 14);
         });
-
-        DB::table('hewan')->insert([
-            ['nama' => 'Sapi Potong'],
-            ['nama' => 'Kerbau'],
-            ['nama' => 'Kambing'],
-            ['nama' => 'Domba'],
-            ['nama' => 'Kuda'],
-        ]);
     }
 
     /**

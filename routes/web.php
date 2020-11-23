@@ -17,6 +17,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('kuartal', 'QuarterController@index')->name('quarters.index');
     Route::get('kuartal/{quarter}', 'QuarterController@active')->name('quarters.active');
 
+    Route::resource('roles', 'RoleController');
+    Route::resource('permissions', 'PermissionController');
+
     Route::get('me', 'UserController@profile')->name('users.profile');
     Route::put('me', 'UserController@updateProfile')->name('users.update-profile');
 
