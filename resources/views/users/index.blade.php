@@ -122,6 +122,75 @@
     cardFormSubmit.style.display = 'block';
   });
 
+  function onClickEdit(event) {
+    event.preventDefault();
+
+    let id = event.target.getAttribute('data-id');
+
+    cardTitleFormSubmit.innerHTML = 'Edit Akun';
+    clearAllInput();
+    document.getElementById('id').value = id;
+    document.getElementById('_method').value = 'put';
+
+    fetch(`{{ route('users.index') }}/${id}/edit`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status) {
+          let _data = data.data;
+          document.getElementById('name').value = _data.name ?? '';
+          document.getElementById('birth_date').value = data.birth_date ?? '';
+          document.getElementById('username').value = _data.username ?? '';
+          $('.select2').val(data.roles).trigger('change');
+        }
+    });
+
+    cardFormSubmit.style.display = 'block';
+  }
+
+  function onClickDelete(event) {
+    event.preventDefault();
+
+    let id = event.target.getAttribute('data-id');
+
+    Swal.fire({
+      title: 'Hapus Data?',
+      text: 'Apakah anda yakin data akan dihapus?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        fetch(`{{ route('users.index') }}/${id}`, {
+          headers: headersJSON,
+          method: 'post',
+          body: JSON.stringify({
+            _method: 'delete'
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status) {
+            $('.select2').val('').trigger('change');
+            Swal.fire({
+              title: 'Sukses!',
+              text: 'Selamat, data telah berhasil dihapus.',
+              icon: 'success',
+              onClose: () => table.ajax.reload()
+            });
+          } else {
+            Swal.fire(
+              'Gagal!',
+              'Data tidak berhasil dihapus.',
+              'error',
+            );
+          }
+        })
+        .catch(err => console.log(err));
+      },
+      allowOutsideClick: () => !Swal.isLoading() 
+    });
+  }
+
   function handleOnSubmit(event) {
     event.preventDefault();
 

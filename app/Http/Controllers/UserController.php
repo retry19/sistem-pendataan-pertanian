@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Role;
 use App\RoleUser;
 use App\User;
@@ -75,6 +76,58 @@ class UserController extends Controller
         $result['status'] = true;
 
         return response()->json($result);
+    }
+
+    public function edit(User $user)
+    {
+        $result['data'] = $user;
+
+        $roleIds = [];
+        foreach ($user->roles as $role) {
+            $roleIds[] = $role->id;
+        }
+
+        $result['birth_date'] = $user->birth_date->format('Y-m-d');
+        $result['roles'] = $roleIds;
+        $result['status'] = true;
+
+        return response()->json($result);
+    }
+
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        $result['status'] = false;
+
+        DB::transaction(function () use ($request, $user) {
+            $userId = $user->id;
+
+            $roleUser = [];
+            foreach ($request->roles as $role) {
+                array_push($roleUser, [
+                    'role_id' => $role,
+                    'user_id' => $userId
+                ]);
+            }
+            RoleUser::where('user_id', $userId)->delete();
+            RoleUser::insert($roleUser);
+
+            $user->name = $request->name;
+            $user->birth_date = $request->birth_date;
+            $user->username = $request->username;
+            $user->save();
+        });
+
+        $result['status'] = true;
+
+        return response()->json($result);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->roles()->detach();
+        $user->delete();
+
+        return response()->json(['status' => true]);
     }
 
     public function profile()

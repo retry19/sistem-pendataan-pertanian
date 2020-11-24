@@ -99,6 +99,9 @@ class RoleController extends Controller
             }
             PermissionRole::where('role_id', $roleId)->delete();
             PermissionRole::insert($permissionRole);
+
+            $role->name = $request->name;
+            $role->save();
         });
 
         $result['status'] = true;
