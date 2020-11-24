@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password', 
     ];
 
+    protected $dates = [
+        'birth_date', 'created_at', 'updated_at',
+    ];
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);

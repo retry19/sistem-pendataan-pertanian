@@ -144,7 +144,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{{ route('users.index') }}" class="nav-link @if(request()->is('users')) active @endif">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Kelola Akun</p>
               </a>

@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('roles', 'RoleController')->except('create', 'show');
     Route::resource('permissions', 'PermissionController')->except('create', 'show');
+    Route::resource('users', 'UserController')->except('create', 'show');
 
     Route::get('me', 'UserController@profile')->name('users.profile');
     Route::put('me', 'UserController@updateProfile')->name('users.update-profile');
