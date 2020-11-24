@@ -225,12 +225,9 @@
           <th colspan="2">Mati</th>
           <th colspan="2">Masuk</th>
           <th colspan="2">Keluar</th>
-          <th colspan="2">Populasi Akhir</th>
           <th rowspan="2">Ditambahkan oleh</th>
         </tr>
         <tr class="text-center">
-          <th>Jan</th>
-          <th>Bet</th>
           <th>Jan</th>
           <th>Bet</th>
           <th>Jan</th>
@@ -273,8 +270,6 @@
       {data: 'masuk_bet', name: 'masuk_bet', class: 'text-center'},
       {data: 'keluar_jan', name: 'keluar_jan', class: 'text-center'},
       {data: 'keluar_bet', name: 'keluar_bet', class: 'text-center'},
-      {data: 'akhir_jan', name: 'akhir_jan', class: 'text-center'},
-      {data: 'akhir_bet', name: 'akhir_bet', class: 'text-center'},
       {data: 'user_id', name: 'user_id'}
     ]
   });
@@ -305,8 +300,8 @@
       .then(res => res.json())
       .then(data => {
         if (data.status) {
-          let data = data.data;
-          document.getElementById('nama').value = data.nama ?? '';
+          let _data = data.data;
+          document.getElementById('nama').value = _data.nama ?? '';
         }
     });
 

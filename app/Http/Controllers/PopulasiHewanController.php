@@ -33,8 +33,6 @@ class PopulasiHewanController extends Controller
                 ->addColumn('masuk_bet', fn($row) => $row->masuk['betina'])
                 ->addColumn('keluar_jan', fn($row) => $row->keluar['jantan'])
                 ->addColumn('keluar_bet', fn($row) => $row->keluar['betina'])
-                ->addColumn('akhir_jan', fn($row) => $row->populasi_akhir['jantan'])
-                ->addColumn('akhir_bet', fn($row) => $row->populasi_akhir['betina'])
                 ->addColumn('action', function($row) {
                     $btnEdit = "<button type=\"button\" class=\"btn btn-sm btn-info rounded-lg button-edit\" data-id=\"{$row->id}\" onclick=\"onClickEdit(event)\"><i class=\"fas fa-edit\" data-id=\"{$row->id}\"></i></button> ";
                     $btnDelete = "<button type=\"button\" class=\"btn btn-sm btn-danger rounded-lg button-delete\" data-id=\"{$row->id}\" onclick=\"onClickDelete(event)\"><i class=\"fas fa-trash\" data-id=\"{$row->id}\"></i></button>";

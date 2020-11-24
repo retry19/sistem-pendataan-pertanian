@@ -174,7 +174,7 @@
 
     <footer class="main-footer text-sm">
       <strong>Copyright &copy; 2020</strong>
-      Kelompok 23 KP
+      Kelompok 13 KP
       <div class="float-right d-none d-sm-inline-block">
         <b>Version</b> 1.0.0
       </div>
