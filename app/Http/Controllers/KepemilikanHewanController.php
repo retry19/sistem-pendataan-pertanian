@@ -18,7 +18,14 @@ class KepemilikanHewanController extends Controller
         abort_unless(Gate::allows('kepemilikan_hewan_read'), 403);
 
         if ($request->ajax()) {
-            $data = JumlahKepemilikanHewan::with('hewan', 'quarter', 'user')->get();
+            $data = JumlahKepemilikanHewan::with('hewan', 'quarter', 'user');
+
+            if (!Gate::allows('kepemilikan_hewan_list')) {
+                $data->where('tahun', date('Y'))
+                    ->where('kuartal_id', Quarter::getIdActived());
+            }
+
+            $data = $data->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
