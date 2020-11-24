@@ -9,12 +9,15 @@ use App\PermissionRole;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(Gate::allows('users_management_access'), 403);
+
         if ($request->ajax()) {
             $data = Role::with('permissions')->get();
 

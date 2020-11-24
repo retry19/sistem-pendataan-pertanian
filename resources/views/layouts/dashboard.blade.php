@@ -111,13 +111,18 @@
               </a>
             </li>
 
+            @if(Gate::check('quarters_management_access') || Gate::check('users_management_access'))
             <li class="nav-header">PENGATURAN</li>
+            @endif
+            @can('quarters_management_access')
             <li class="nav-item">
               <a href="{{ route('quarters.index') }}" class="nav-link @if(request()->is('kuartal')) active @endif">
                 <i class="nav-icon fas fa-swatchbook"></i>
                 <p>Kuartal</p>
               </a>
             </li>
+            @endcan
+            @can('users_management_access')
             <li class="nav-item has-treeview @if(request()->is('roles*') || request()->is('permissions*')) menu-open @endif">
               <a href="" class="nav-link @if(request()->is('roles*') || request()->is('permissions*')) active @endif">
                 <i class="nav-icon fas fa-key"></i>
@@ -144,6 +149,7 @@
                 <p>Kelola Akun</p>
               </a>
             </li>
+            @endcan
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -6,12 +6,15 @@ use App\Http\Requests\PermissionStoreRequest;
 use App\Http\Requests\PermissionUpdateRequest;
 use App\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(Gate::allows('users_management_access'), 403);
+
         if ($request->ajax()) {
             $data = Permission::get();
 

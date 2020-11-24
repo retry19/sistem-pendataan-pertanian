@@ -25,6 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        if (!app()->runningInConsole()) {
+            $roles = \App\Role::with('permissions')->get();
+
+            foreach ($roles as $role) {
+                foreach ($role->permissions as $permission) {
+                    $permissionsArr[$permission->title][] = $role->id;
+                }
+            }
+
+            foreach ($permissionsArr as $title => $roles) {
+                Gate::define($title, function($user) use ($roles) {
+                    return count(array_intersect($user->roles->pluck('id')->toArray(), $roles)) > 0;
+                });
+            }
+        }
     }
 }
