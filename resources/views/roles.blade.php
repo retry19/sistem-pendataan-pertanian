@@ -1,82 +1,104 @@
 @extends('layouts.dashboard')
-@section('title', 'Permissions :: '. config('app.name'))
-@section('heading', 'Permissions')
+@section('title', 'Roles :: '. config('app.name'))
+@section('heading', 'Roles')
+
+@section('css')
+<style>
+  /* .select2-dropdown {
+    z-index:99999;
+} */
+</style>
+@endsection
 
 @section('content')
-<div class="row">
-  <div class="col-md-7">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">Daftar Permissions</h5>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" id="btn-open-card-add">
-            <i class="fas fa-plus"></i>&nbsp; Tambah Permission
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <table class="table table-bordered table-hover" id="table">
-          <thead>
-            <tr class="text-center">
-              <th width="30px">No</th>
-              <th>Judul</th>
-              <th width="100px">Aksi</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
+<div class="card card-outline card-primary" id="card-submit" style="display: none">
+  <div class="card-header">
+    <h5 class="card-title" id="card-title">Tambah Role</h5>
+    <div class="card-tools">
+      <button type="button" class="btn btn-tool" data-card-widget="remove">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
   </div>
-
-  <div class="col-md-5">
-    <div class="card card-outline card-primary" id="card-submit" style="display: none">
-      <div class="card-header">
-        <h5 class="card-title" id="card-title">Tambah Permissions</h5>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
-            <i class="fas fa-times"></i>
-          </button>
+  <form id="form" enctype="multipart/form-data">
+    <input type="hidden" name="id" id="id" class="form-control">
+    <input type="hidden" name="_method" id="_method" class="form-control">
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="name" class="col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
+        <div class="col-md-9">
+          <input type="text" name="name" class="form-control" id="name">
+          <small class="text-danger" id="error-name"></small>
         </div>
       </div>
-      <form id="form" enctype="multipart/form-data">
-        <input type="hidden" name="id" id="id" class="form-control">
-        <input type="hidden" name="_method" id="_method" class="form-control">
-        <div class="card-body">
-          <div class="form-group row">
-            <label for="title" class="col-md-3 col-form-label">Judul <span class="text-danger">*</span></label>
-            <div class="col-md-9">
-              <input type="text" name="title" class="form-control" id="title">
-              <small class="text-danger" id="error-title"></small>
-            </div>
-          </div>
+      <div class="form-group row">
+        <label for="permissions" class="col-md-3 col-form-label">Permissions <span class="text-danger">*</span></label>
+        <div class="col-md-9">
+          <select name="permissions[]" class="form-control select2" multiple="multiple" id="permissions" data-placeholder="Pilih permission">
+            @foreach ($permissions as $permission)
+            <option value="{{ $permission->id }}">{{ $permission->title }}</option>
+            @endforeach
+          </select>
+          <small class="text-danger" id="error-permissions"></small>
         </div>
-        <div class="card-footer">
-          <span class="text-muted"><strong class="text-danger">*</strong> Data wajib diisi.</span>
-          <div class="float-right">
-            <button type="submit" class="btn btn-success">Simpan</button>&nbsp; 
-            <button type="reset" class="btn btn-outline-secondary">Reset</button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
+    <div class="card-footer">
+      <span class="text-muted"><strong class="text-danger">*</strong> Data wajib diisi.</span>
+      <div class="float-right">
+        <button type="submit" class="btn btn-success">Simpan</button>&nbsp; 
+        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title">Daftar Roles</h5>
+    <div class="card-tools">
+      <button type="button" class="btn btn-tool" id="btn-open-card-add">
+        <i class="fas fa-plus"></i>&nbsp; Tambah Role
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered table-hover" id="table">
+      <thead>
+        <tr class="text-center">
+          <th width="30px">No</th>
+          <th width="200px">Nama</th>
+          <th>Permissions</th>
+          <th width="100px">Aksi</th>
+        </tr>
+      </thead>
+    </table>
   </div>
 </div>
 @endsection
 
 @section('js')
 <script>
+  $(function () {
+    $('.select2').select2({
+      theme: 'bootstrap4',
+      width: '100%',
+      dropdownParent: $('#card-submit')
+    });
+  });
+  
   let table = $('#table').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
-    ajax: '{{ route('permissions.index') }}',
+    ajax: '{{ route('roles.index') }}',
     columns: [
       {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center'},
-      {data: 'title', name: 'title'},
+      {data: 'name', name: 'name'},
+      {data: 'permissions', name: 'permissions'},
       {data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false},
     ]
   });
-
 
   let cardTitleFormSubmit = document.getElementById('card-title');
 
@@ -95,17 +117,18 @@
 
     let id = event.target.getAttribute('data-id');
 
-    cardTitleFormSubmit.innerHTML = 'Edit Permission';
+    cardTitleFormSubmit.innerHTML = 'Edit Role';
     clearAllInput();
     document.getElementById('id').value = id;
     document.getElementById('_method').value = 'put';
 
-    fetch(`{{ route('permissions.index') }}/${id}/edit`)
+    fetch(`{{ route('roles.index') }}/${id}/edit`)
       .then(res => res.json())
       .then(data => {
         if (data.status) {
           let _data = data.data;
-          document.getElementById('title').value = _data.title ?? '';
+          document.getElementById('name').value = _data.name ?? '';
+          $('.select2').val(data.permissions).trigger('change');
         }
     });
 
@@ -125,7 +148,7 @@
       confirmButtonText: 'Ya, Hapus',
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        fetch(`{{ route('permissions.index') }}/${id}`, {
+        fetch(`{{ route('roles.index') }}/${id}`, {
           headers: headersJSON,
           method: 'post',
           body: JSON.stringify({
@@ -135,6 +158,7 @@
         .then(res => res.json())
         .then(data => {
           if (data.status) {
+            $('.select2').val('').trigger('change');
             Swal.fire({
               title: 'Sukses!',
               text: 'Selamat, data telah berhasil dihapus.',
@@ -160,14 +184,15 @@
 
     removeClassNameByClass('form-control', 'is-invalid');
     removeInnerHTMLByIds([
-      'title',
+      'name',
+      'permissions'
     ], true);
 
     let id = document.getElementById('id').value ?? '';
     let method = document.getElementById('_method').value;
     let url = method == 'put' 
-      ? `{{ route('permissions.store') }}/${id}`
-      : '{{ route('permissions.store') }}'
+      ? `{{ route('roles.store') }}/${id}`
+      : '{{ route('roles.store') }}'
 
     Swal.fire({
       title: 'Simpan Data?',
@@ -203,6 +228,7 @@
           if (data.status) {
             form.reset();
             cardFormSubmit.style.display = 'none';
+            $('.select2').val('').trigger('change'); // <--- hati-hati harus di hapus apabila tidak pakai
             if (document.getElementById('preview-image')) {
               document.getElementById('preview-image').style.display = 'none';
             }
