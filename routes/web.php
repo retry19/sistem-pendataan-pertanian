@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('kepemilikan-hewan/{id}', 'KepemilikanHewanController@update')->name('kepemilikan-hewan.update');
     Route::delete('kepemilikan-hewan/{id}', 'KepemilikanHewanController@destroy')->name('kepemilikan-hewan.destroy');
 
+    Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 
     Route::get('kuartal', 'QuarterController@index')->name('quarters.index');

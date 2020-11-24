@@ -93,19 +93,25 @@
               </a>
             </li>
 
+            @if(Gate::check('tanaman_management_access') || Gate::check('hewan_management_access'))
             <li class="nav-header">LIST</li>
+            @endif
+            @can('tanaman_management_access')
             <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('tanaman')) active @endif">
+              <a href="{{ route('tanaman.index') }}" class="nav-link @if(request()->is('tanaman')) active @endif">
                 <i class="nav-icon fas fa-seedling"></i>
                 <p>Tanaman</p>
               </a>
             </li>
+            @endcan
+            @can('hewan_management_access')
             <li class="nav-item">
               <a href="{{ route('hewan.index') }}" class="nav-link @if(request()->is('hewan')) active @endif">
                 <i class="nav-icon fas fa-paw"></i>
                 <p>Hewan</p>
               </a>
             </li>
+            @endcan
 
             @if(Gate::check('quarters_management_access') || Gate::check('users_management_access'))
             <li class="nav-header">PENGATURAN</li>

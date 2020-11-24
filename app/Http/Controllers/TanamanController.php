@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Hewan;
+use App\Http\Requests\TanamanRequest;
+use App\Tanaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
-class HewanController extends Controller
+class TanamanController extends Controller
 {
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('hewan_management_access'), 403);
+        abort_unless(Gate::allows('tanaman_management_access'), 403);
 
         if ($request->ajax()) {
-            $data = Hewan::all();
+            $data = Tanaman::get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -27,43 +28,36 @@ class HewanController extends Controller
                 ->make(true);
         }
 
-        return view('hewan');
+        return view('tanaman');
     }
 
-    public function store(Request $request)
+    public function store(TanamanRequest $request)
     {
-        $request->validate([
-            'nama' => 'required|string|max:14',
-        ]);
-
-        Hewan::create($request->only('nama'));
+        Tanaman::create($request->validated());
 
         return response()->json(['status' => true]);
     }
 
-    public function edit(Hewan $hewan)
+    public function edit(Tanaman $tanaman)
     {
-        $result['hewan'] = $hewan;
+        $result['data'] = $tanaman;
         $result['status'] = true;
 
         return response()->json($result);
     }
 
-    public function update(Hewan $hewan, Request $request)
+    public function update(TanamanRequest $request, Tanaman $tanaman)
     {
-        $request->validate([
-            'nama' => 'required|string|max:14',
-        ]);
-
-        $hewan->nama = $request->nama;
-        $hewan->save();
+        $tanaman->nama = $request->nama;
+        $tanaman->jenis = $request->jenis;
+        $tanaman->save();
 
         return response()->json(['status' => true]);
     }
 
-    public function destroy(Hewan $hewan)
+    public function destroy(Tanaman $tanaman)
     {
-        $hewan->delete();
+        $tanaman->delete();
 
         return response()->json(['status' => true]);
     }
