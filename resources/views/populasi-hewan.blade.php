@@ -25,7 +25,8 @@
       <div class="form-group row">
         <label for="hewan_id" class="col-md-3 col-form-label">Jenis Ternak <span class="text-danger">*</span></label>
         <div class="col-md-9">
-          <select name="hewan_id" id="hewan_id" class="form-control form-control-sm w-50">
+          <select name="hewan_id" id="hewan_id" class="form-control select2bs4 form-control-sm" style="width: 50%">
+            <option value="">--- Pilih hewan ---</option>
             @foreach ($hewan as $h)
             <option value="{{ $h->id }}">{{ ucwords($h->nama) }}</option>
             @endforeach
@@ -33,15 +34,27 @@
           <small class="text-danger" id="error-hewan_id"></small>
         </div>
       </div>
+      @can('populasi_hewan_quarter')
       <div class="form-group row">
         <label for="tahun" class="col-md-3 col-form-label">Tahun <span class="text-danger">*</span></label>
         <div class="col-md-9">
-          <select name="tahun" id="tahun" class="form-control form-control-sm w-25">
-            <option value="2020">2020</option>
-          </select>
+          <input type="text" name="tahun" class="form-control form-control-sm w-25" id="tahun">
           <small class="text-danger" id="error-tahun"></small>
         </div>
       </div>
+      <div class="form-group row">
+        <label for="kuartal_id" class="col-md-3 col-form-label">Kuartal <span class="text-danger">*</span></label>
+        <div class="col-md-9">
+          <select name="kuartal_id" id="kuartal_id" class="form-control select2bs4 form-control-sm" style="width: 25%">
+            <option value="">--- Pilih kuartal ---</option>
+            @foreach ($quarters as $q)
+            <option value="{{ $q->id }}">{{ $q->section }}</option>
+            @endforeach
+          </select>
+          <small class="text-danger" id="error-kuartal_id"></small>
+        </div>
+      </div>
+      @endcan
       <div class="form-group row">
         <label class="col-md-3 col-form-label">Populasi Awal <span class="text-danger">*</span></label>
         <div class="col-md-9">
@@ -68,7 +81,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 col-form-label">Jumlah lahir <span class="text-danger">*</span></label>
+        <label class="col-md-3 col-form-label">Jumlah lahir</label>
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-4">
@@ -93,7 +106,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 col-form-label">Jumlah dipotong <span class="text-danger">*</span></label>
+        <label class="col-md-3 col-form-label">Jumlah dipotong</label>
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-4">
@@ -118,7 +131,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah mati <span class="text-danger">*</span></label>
+        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah mati</label>
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-4">
@@ -143,7 +156,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah masuk <span class="text-danger">*</span></label>
+        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah masuk</label>
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-4">
@@ -168,7 +181,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah keluar <span class="text-danger">*</span></label>
+        <label for="hewan_id" class="col-md-3 col-form-label">Jumlah keluar</label>
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-4">
@@ -207,27 +220,34 @@
   <div class="card-header">
     <h5 class="card-title">Daftar populasi hewan</h5>
     <div class="card-tools">
+      @can('populasi_hewan_create')
       <button type="button" class="btn btn-tool" id="btn-open-card-add">
         <i class="fas fa-plus"></i>&nbsp; Tambah Populasi Hewan
       </button>
+      @endcan
     </div>
   </div>
   <div class="card-body">
-    <table class="table table-bordered table-hover" id="table">
+    <table class="table table-bordered table-hover text-sm" id="table">
       <thead>
         <tr class="text-center">
           <th rowspan="2">No</th>
           <th rowspan="2">Aksi</th>
           <th rowspan="2">Jenis Ternak</th>
+          <th rowspan="2">Tahun</th>
+          <th rowspan="2">Kuartal</th>
           <th colspan="2">Populasi Awal</th>
           <th colspan="2">Lahir</th>
           <th colspan="2">Dipotong</th>
           <th colspan="2">Mati</th>
           <th colspan="2">Masuk</th>
           <th colspan="2">Keluar</th>
+          <th colspan="2">Populasi Akhir</th>
           <th rowspan="2">Ditambahkan oleh</th>
         </tr>
         <tr class="text-center">
+          <th>Jan</th>
+          <th>Bet</th>
           <th>Jan</th>
           <th>Bet</th>
           <th>Jan</th>
@@ -249,6 +269,12 @@
 
 @section('js')
 <script>
+  $(function () {
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    });
+  });
+
   let table = $('#table').DataTable({
     scrollX: true,
     processing: true,
@@ -258,6 +284,8 @@
       {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center'},
       {data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false},
       {data: 'hewan_id', name: 'hewan_id'},
+      {data: 'tahun', name: 'tahun', class: 'text-center'},
+      {data: 'kuartal', name: 'kuartal', class: 'text-center'},
       {data: 'awal_jan', name: 'awal_jan', class: 'text-center'},
       {data: 'awal_bet', name: 'awal_bet', class: 'text-center'},
       {data: 'lahir_jan', name: 'lahir_jan', class: 'text-center'},
@@ -270,6 +298,8 @@
       {data: 'masuk_bet', name: 'masuk_bet', class: 'text-center'},
       {data: 'keluar_jan', name: 'keluar_jan', class: 'text-center'},
       {data: 'keluar_bet', name: 'keluar_bet', class: 'text-center'},
+      {data: 'akhir_jan', name: 'akhir_jan', class: 'text-center'},
+      {data: 'akhir_bet', name: 'akhir_bet', class: 'text-center'},
       {data: 'user_id', name: 'user_id'}
     ]
   });
@@ -301,11 +331,75 @@
       .then(data => {
         if (data.status) {
           let _data = data.data;
-          document.getElementById('nama').value = _data.nama ?? '';
+          if ($('#hewan_id').length) {
+            $('#hewan_id').val(_data.hewan_id).trigger('change');
+          }
+          if ($('#kuartal_id').length) {
+            $('#kuartal_id').val(_data.kuartal_id).trigger('change');
+          }
+          if (document.getElementById('tahun')) {
+            document.getElementById('tahun').value = _data.tahun ?? '';
+          }
+          document.getElementById('populasi_awal_jantan').value = _data.populasi_awal.jantan ?? '';
+          document.getElementById('populasi_awal_betina').value = _data.populasi_awal.betina ?? '';
+          document.getElementById('jumlah_lahir_jantan').value = _data.lahir.jantan ?? '';
+          document.getElementById('jumlah_lahir_betina').value = _data.lahir.betina ?? '';
+          document.getElementById('jumlah_dipotong_jantan').value = _data.dipotong.jantan ?? '';
+          document.getElementById('jumlah_dipotong_betina').value = _data.dipotong.betina ?? '';
+          document.getElementById('jumlah_mati_jantan').value = _data.mati.jantan ?? '';
+          document.getElementById('jumlah_mati_betina').value = _data.mati.betina ?? '';
+          document.getElementById('jumlah_masuk_jantan').value = _data.masuk.jantan ?? '';
+          document.getElementById('jumlah_masuk_betina').value = _data.masuk.betina ?? '';
+          document.getElementById('jumlah_keluar_jantan').value = _data.keluar.jantan ?? '';
+          document.getElementById('jumlah_keluar_betina').value = _data.keluar.betina ?? '';
         }
     });
 
     cardFormSubmit.style.display = 'block';
+  }
+
+  function onClickDelete(event) {
+    event.preventDefault();
+
+    let id = event.target.getAttribute('data-id');
+
+    Swal.fire({
+      title: 'Hapus Data?',
+      text: 'Apakah anda yakin data akan dihapus?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        fetch(`{{ route('populasi-hewan.index') }}/${id}`, {
+          headers: headersJSON,
+          method: 'post',
+          body: JSON.stringify({
+            _method: 'delete'
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status) {
+            $('.select2bs4').val('').trigger('change');
+            Swal.fire({
+              title: 'Sukses!',
+              text: 'Selamat, data telah berhasil dihapus.',
+              icon: 'success',
+              onClose: () => table.ajax.reload()
+            });
+          } else {
+            Swal.fire(
+              'Gagal!',
+              'Data tidak berhasil dihapus.',
+              'error',
+            );
+          }
+        })
+        .catch(err => console.log(err));
+      },
+      allowOutsideClick: () => !Swal.isLoading() 
+    });
   }
 
   function handleOnSubmit(event) {
@@ -369,6 +463,7 @@
           if (data.status) {
             form.reset();
             cardFormSubmit.style.display = 'none';
+            $('.select2bs4').val('').trigger('change');
             if (document.getElementById('preview-image')) {
               document.getElementById('preview-image').style.display = 'none';
             }

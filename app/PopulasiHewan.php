@@ -31,4 +31,9 @@ class PopulasiHewan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function quarter()
+    {
+        return $this->belongsTo(Quarter::class, 'kuartal_id');
+    }
 }

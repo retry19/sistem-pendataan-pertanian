@@ -8,19 +8,23 @@ use App\PopulasiHewan;
 use App\Quarter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
 class PopulasiHewanController extends Controller
 {
     public function index(Request $request)
     {
+        abort_unless(Gate::allows('populasi_hewan_read'), 403);
+
         if ($request->ajax()) {
-            $data = PopulasiHewan::with('hewan')->get();
+            $data = PopulasiHewan::with('hewan', 'quarter')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('hewan_id', fn($row) => $row->hewan->nama)
                 ->editColumn('user_id', fn($row) => $row->user->name)
+                ->addColumn('kuartal', fn($row) => $row->quarter->section)
                 ->addColumn('awal_jan', fn($row) => $row->populasi_awal['jantan'])
                 ->addColumn('awal_bet', fn($row) => $row->populasi_awal['betina'])
                 ->addColumn('lahir_jan', fn($row) => $row->lahir['jantan'])
@@ -33,24 +37,38 @@ class PopulasiHewanController extends Controller
                 ->addColumn('masuk_bet', fn($row) => $row->masuk['betina'])
                 ->addColumn('keluar_jan', fn($row) => $row->keluar['jantan'])
                 ->addColumn('keluar_bet', fn($row) => $row->keluar['betina'])
+                ->addColumn('akhir_jan', fn($row) => $this->sumPopulasi($row, 'jantan'))
+                ->addColumn('akhir_bet', fn($row) => $this->sumPopulasi($row, 'betina'))
                 ->addColumn('action', function($row) {
-                    $btnEdit = "<button type=\"button\" class=\"btn btn-sm btn-info rounded-lg button-edit\" data-id=\"{$row->id}\" onclick=\"onClickEdit(event)\"><i class=\"fas fa-edit\" data-id=\"{$row->id}\"></i></button> ";
-                    $btnDelete = "<button type=\"button\" class=\"btn btn-sm btn-danger rounded-lg button-delete\" data-id=\"{$row->id}\" onclick=\"onClickDelete(event)\"><i class=\"fas fa-trash\" data-id=\"{$row->id}\"></i></button>";
-                    return $btnEdit . $btnDelete;
+                    if (Gate::allows('populasi_hewan_update')) {
+                        $btnEdit = "<button type=\"button\" class=\"btn btn-sm btn-info rounded-lg button-edit\" data-id=\"{$row->id}\" onclick=\"onClickEdit(event)\"><i class=\"fas fa-edit\" data-id=\"{$row->id}\"></i></button> ";
+                    }
+
+                    if (Gate::allows('populasi_hewan_delete')) {
+                        $btnDelete = "<button type=\"button\" class=\"btn btn-sm btn-danger rounded-lg button-delete\" data-id=\"{$row->id}\" onclick=\"onClickDelete(event)\"><i class=\"fas fa-trash\" data-id=\"{$row->id}\"></i></button>";
+                    }
+                    return ($btnEdit ?? '-') . ($btnDelete ?? '-');
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
         $hewan = Hewan::all();
+        $quarters = Quarter::all();
 
-        return view('peternakan.populasi-hewan', compact('hewan'));
+        return view('populasi-hewan', compact(
+            'hewan',
+            'quarters'
+        ));
     }
 
     public function store(PopulasiHewanStoreRequest $request)
     {
         $result['status'] = false;
-        $hewan = PopulasiHewan::where('tahun', $request->tahun)
+        
+        $kuartalId = Quarter::getIdActived();
+        $hewan = PopulasiHewan::where('tahun', $request->tahun ?? date('Y'))
+            ->where('kuartal_id', $request->kuartal_id ?? $kuartalId)
             ->where('hewan_id', $request->hewan_id)
             ->first();
 
@@ -73,7 +91,7 @@ class PopulasiHewanController extends Controller
             - ($request->jumlah_keluar_betina ?? 0);
 
         if ($populasiAkhir['jantan'] < 0 || $populasiAkhir['betina'] < 0) {
-            $result['msg'] = 'Harap masukan jumlah ternak yang valid.';
+            $result['msg'] = 'Populasi akhir hewan minus, harap masukan jumlah ternak yang valid.';
             return response()->json($result);
         }
 
@@ -103,10 +121,9 @@ class PopulasiHewanController extends Controller
                 'jantan' => $request->jumlah_keluar_jantan,
                 'betina' => $request->jumlah_keluar_betina
             ],
-            'populasi_akhir' => $populasiAkhir,
-            'tahun' => $request->tahun,
+            'tahun' => $request->tahun ?? date('Y'),
             'user_id' => Auth::id(),
-            'kuartal_id' => Quarter::getIdActived()
+            'kuartal_id' => $request->kuartal_id ?? Quarter::getIdActived()
         ];
 
         PopulasiHewan::create($populasiHewan);
@@ -123,12 +140,90 @@ class PopulasiHewanController extends Controller
         return response()->json($result);
     }
 
-    private function decodeToGender($json, $isMale = false)
+    public function update(PopulasiHewanStoreRequest $request, PopulasiHewan $populasiHewan)
     {
-        $row = json_decode($json, true);
+        $result['status'] = false;
+        
+        $kuartalId = Quarter::getIdActived();
+        $hewan = PopulasiHewan::where('tahun', $request->tahun ?? date('Y'))
+            ->where('kuartal_id', $request->kuartal_id ?? $kuartalId)
+            ->where('hewan_id', $request->hewan_id)
+            ->where('id', '!=', $populasiHewan->id)
+            ->first();
 
-        return $isMale 
-            ? ($row['jantan'] ?? 0)
-            : ($row['betina'] ?? 0);
+        if ($hewan) {
+            $result['msg'] = 'Terdapat jenis ternak yang sama, pada tahun dan kuartal tersebut.';
+            return response()->json($result);
+        }
+
+        $populasiAkhir['jantan'] = $request->populasi_awal_jantan
+            + ($request->jumlah_lahir_jantan ?? 0)
+            - ($request->jumlah_dipotong_jantan ?? 0)
+            - ($request->jumlah_mati_jantan ?? 0)
+            + ($request->jumlah_masuk_jantan ?? 0)
+            - ($request->jumlah_keluar_jantan ?? 0);
+        $populasiAkhir['betina'] = $request->populasi_awal_betina
+            + ($request->jumlah_lahir_betina ?? 0)
+            - ($request->jumlah_dipotong_betina ?? 0)
+            - ($request->jumlah_mati_betina ?? 0)
+            + ($request->jumlah_masuk_betina ?? 0)
+            - ($request->jumlah_keluar_betina ?? 0);
+
+        if ($populasiAkhir['jantan'] < 0 || $populasiAkhir['betina'] < 0) {
+            $result['msg'] = 'Populasi akhir hewan minus, harap masukan jumlah ternak yang valid.';
+            return response()->json($result);
+        }
+
+        
+        $populasiHewan->hewan_id = $request->hewan_id;
+        $populasiHewan->populasi_awal = [
+            'jantan' => $request->populasi_awal_jantan,
+            'betina' => $request->populasi_awal_betina
+        ];
+        $populasiHewan->lahir = [
+            'jantan' => $request->jumlah_lahir_jantan,
+            'betina' => $request->jumlah_lahir_betina
+        ];
+        $populasiHewan->dipotong = [
+            'jantan' => $request->jumlah_dipotong_jantan,
+            'betina' => $request->jumlah_dipotong_betina
+        ];
+        $populasiHewan->mati = [
+            'jantan' => $request->jumlah_mati_jantan,
+            'betina' => $request->jumlah_mati_betina
+        ];
+        $populasiHewan->masuk = [
+            'jantan' => $request->jumlah_masuk_jantan,
+            'betina' => $request->jumlah_masuk_betina
+        ];
+        $populasiHewan->keluar = [
+            'jantan' => $request->jumlah_keluar_jantan,
+            'betina' => $request->jumlah_keluar_betina
+        ];
+        $populasiHewan->tahun = $request->tahun ?? date('Y');
+        $populasiHewan->user_id = Auth::id();
+        $populasiHewan->kuartal_id = $request->kuartal_id ?? Quarter::getIdActived();
+
+        $populasiHewan->save();
+        $result['status'] = true;
+
+        return response()->json($result);
+    }
+
+    public function destroy(PopulasiHewan $populasiHewan)
+    {
+        $populasiHewan->delete();
+
+        return response()->json(['status' => true]);
+    }
+
+    private function sumPopulasi($row, $gender)
+    {
+        return ($row->populasi_awal[$gender]
+            + ($row->lahir[$gender] ?? 0)
+            - ($row->dipotong[$gender] ?? 0)
+            - ($row->mati[$gender] ?? 0)
+            + ($row->masuk[$gender] ?? 0)
+            - ($row->keluar[$gender] ?? 0));
     }
 }

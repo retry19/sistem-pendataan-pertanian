@@ -23,9 +23,12 @@ class PopulasiHewanStoreRequest extends FormRequest
      */
     public function rules()
     {
+        $year = date('Y');
+        $lastYear = date('Y') - 1;
+
         return [
             'hewan_id' => 'required|numeric',
-            'tahun' => 'required|numeric',
+            'tahun' => "nullable|digits:4|integer|min:{$lastYear}|max:{$year}",
             'populasi_awal_jantan' => 'required|numeric|min:0',
             'populasi_awal_betina' => 'required|numeric|min:0',
             'jumlah_lahir_jantan' => 'nullable|numeric|min:0',

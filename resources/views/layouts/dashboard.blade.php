@@ -61,7 +61,7 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <nav class="mt-3">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
               <a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('dashboard')) active @endif">
                 <i class="nav-icon fas fa-columns"></i>
@@ -70,20 +70,14 @@
             </li>
 
             <li class="nav-header">DATA</li>
-            <li class="nav-item has-treeview @if(request()->is('peternakan*')) menu-open @endif">
-              <a href="" class="nav-link @if(request()->is('peternakan*')) active @endif">
+            @can('populasi_hewan_read')
+            <li class="nav-item">
+              <a href="{{ route('populasi-hewan.index') }}" class="nav-link @if(request()->is('populasi-hewan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
-                <p>Peternakan <i class="right fas fa-angle-left"></i></p>
+                <p>Populasi Hewan</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{ route('populasi-hewan.index') }}" class="nav-link @if(request()->is('peternakan/populasi-hewan*')) active @endif">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Populasi</p>
-                  </a>
-                </li>
-              </ul>
             </li>
+            @endcan
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>

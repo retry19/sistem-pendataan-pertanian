@@ -8,9 +8,7 @@ Route::post('authentication', 'LoginController@authentication')->name('auth.logi
 Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-    Route::group(['prefix' => 'peternakan'], function () {
-        Route::resource('populasi-hewan', 'PopulasiHewanController')->except('create', 'show');
-    });
+    Route::resource('populasi-hewan', 'PopulasiHewanController')->except('create', 'show');
 
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 
