@@ -78,16 +78,18 @@
               </a>
             </li>
             @endcan
+            @can('kepemilikan_hewan_read')
+            <li class="nav-item">
+              <a href="{{ route('kepemilikan-hewan.index') }}" class="nav-link @if(request()->is('kepemilikan-hewan')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Kepemilikan Hewan</p>
+              </a>
+            </li>
+            @endcan
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
                 <p>Kepemilikan Lahan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('kepemilikan-hewan')) active @endif">
-                <i class="nav-icon fas fa-book"></i>
-                <p>Kepemilikan Hewan</p>
               </a>
             </li>
 

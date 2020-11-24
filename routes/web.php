@@ -10,6 +10,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('populasi-hewan', 'PopulasiHewanController')->except('create', 'show');
 
+    Route::get('kepemilikan-hewan', 'KepemilikanHewanController@index')->name('kepemilikan-hewan.index');
+    Route::post('kepemilikan-hewan', 'KepemilikanHewanController@store')->name('kepemilikan-hewan.store');
+    Route::get('kepemilikan-hewan/{id}/edit', 'KepemilikanHewanController@edit')->name('kepemilikan-hewan.edit');
+    Route::put('kepemilikan-hewan/{id}', 'KepemilikanHewanController@update')->name('kepemilikan-hewan.update');
+    Route::delete('kepemilikan-hewan/{id}', 'KepemilikanHewanController@destroy')->name('kepemilikan-hewan.destroy');
+
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 
     Route::get('kuartal', 'QuarterController@index')->name('quarters.index');

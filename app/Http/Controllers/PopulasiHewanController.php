@@ -18,7 +18,7 @@ class PopulasiHewanController extends Controller
         abort_unless(Gate::allows('populasi_hewan_read'), 403);
 
         if ($request->ajax()) {
-            $data = PopulasiHewan::with('hewan', 'quarter')->get();
+            $data = PopulasiHewan::with('hewan', 'quarter', 'user')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
