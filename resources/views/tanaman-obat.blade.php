@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
-@section('title', 'Tanaman Buah :: '. config('app.name'))
-@section('heading', 'Tanaman Buah')
+@section('title', 'Tanaman Obat :: '. config('app.name'))
+@section('heading', 'Tanaman Obat')
 
 @section('css')
 <style>
@@ -11,7 +11,7 @@
 @section('content')
 <div class="card card-outline card-primary" id="card-submit" style="display: none">
   <div class="card-header">
-    <h5 class="card-title" id="card-title">Tambah Tanaman Buah</h5>
+    <h5 class="card-title" id="card-title">Tambah Tanaman Obat</h5>
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="remove">
         <i class="fas fa-times"></i>
@@ -34,7 +34,7 @@
           <small class="text-danger" id="error-tanaman_id"></small>
         </div>
       </div>
-      @can('tanaman_buah_quarter')
+      @can('tanaman_obat_quarter')
       <div class="form-group row">
         <label for="tahun" class="col-md-3 col-form-label">Tahun</label>
         <div class="col-md-9">
@@ -72,24 +72,24 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="ditambah" class="col-md-3 col-form-label">Tambah Tanam</label>
-        <div class="col-md-9">
-          <input type="text" name="ditambah" class="form-control form-control-sm w-25" id="ditambah">
-          <small class="text-danger" id="error-ditambah"></small>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="blm_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Menghasilkan</label>
-        <div class="col-md-9">
-          <input type="text" name="blm_menghasilkan" class="form-control form-control-sm w-25" id="blm_menghasilkan">
-          <small class="text-danger" id="error-blm_menghasilkan"></small>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Sedang Menghasilkan</label>
+        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Habis</label>
         <div class="col-md-9">
           <input type="text" name="sdg_menghasilkan" class="form-control form-control-sm w-25" id="sdg_menghasilkan">
           <small class="text-danger" id="error-sdg_menghasilkan"></small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="luas_rusak" class="col-md-3 col-form-label">Luas Rusak</label>
+        <div class="col-md-9">
+          <input type="text" name="luas_rusak" class="form-control form-control-sm w-25" id="luas_rusak">
+          <small class="text-danger" id="error-luas_rusak"></small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="ditambah" class="col-md-3 col-form-label">Luas Tanaman Baru</label>
+        <div class="col-md-9">
+          <input type="text" name="ditambah" class="form-control form-control-sm w-25" id="ditambah">
+          <small class="text-danger" id="error-ditambah"></small>
         </div>
       </div>
       <div class="form-group row">
@@ -111,11 +111,11 @@
 </div>
 <div class="card">
   <div class="card-header">
-    <h5 class="card-title">Daftar Tanaman Buah</h5>
+    <h5 class="card-title">Daftar Tanaman Obat</h5>
     <div class="card-tools">
-      @can('tanaman_buah_create')
+      @can('tanaman_obat_create')
       <button type="button" class="btn btn-tool" id="btn-open-card-add">
-        <i class="fas fa-plus"></i>&nbsp; Tambah Tanaman Buah
+        <i class="fas fa-plus"></i>&nbsp; Tambah Tanaman Obat
       </button>
       @endcan
     </div>
@@ -131,10 +131,10 @@
           <th>Kuartal</th>
           <th>Tanaman Bulan Lalu</th>
           <th>Tanaman Dibongkar</th>
-          <th>Tambah Tanam</th>
-          <th>Tanaman Akhir Bulan</th>
-          <th>Tanaman Belum Menghasilkan</th>
-          <th>Tanaman Sedang Menghasilkan</th>
+          <th>Tanaman Belum Habis</th>
+          <th>Luas Rusak</th>
+          <th>Luas Tanaman Baru</th>
+          <th>Luas Tanaman Akhir</th>
           <th>Produksi</th>
           <th>Ditambahkan oleh</th>
         </tr>
@@ -156,7 +156,7 @@
     scrollX: true,
     processing: true,
     serverSide: true,
-    ajax: '{{ route('tanaman-buah.index') }}',
+    ajax: '{{ route('tanaman-obat.index') }}',
     columns: [
       {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'text-center'},
       {data: 'action', name: 'action', class: 'text-center', orderable: false, searchable: false},
@@ -165,10 +165,10 @@
       {data: 'kuartal', name: 'kuartal', class: 'text-center'},
       {data: 'tanaman_awal', name: 'tanaman_awal', class: 'text-center'},
       {data: 'dibongkar', name: 'dibongkar', class: 'text-center'},
+      {data: 'sdg_menghasilkan', name: 'sdg_menghasilkan', class: 'text-center'},
+      {data: 'luas_rusak', name: 'luas_rusak', class: 'text-center'},
       {data: 'ditambah', name: 'ditambah', class: 'text-center'},
       {data: 'tanaman_akhir', name: 'tanaman_akhir', class: 'text-center'},
-      {data: 'blm_menghasilkan', name: 'blm_menghasilkan', class: 'text-center'},
-      {data: 'sdg_menghasilkan', name: 'sdg_menghasilkan', class: 'text-center'},
       {data: 'produksi', name: 'produksi', class: 'text-center'},
       {data: 'user_id', name: 'user_id'}
     ]
@@ -179,7 +179,7 @@
   // Event untuk menampilkan form tambah banner
   let cardFormSubmit = document.getElementById('card-submit');
   document.getElementById('btn-open-card-add').addEventListener('click', function(event) {
-    cardTitleFormSubmit.innerHTML = 'Tambah Tanaman Buah';
+    cardTitleFormSubmit.innerHTML = 'Tambah Tanaman Obat';
     clearAllInput();
     document.getElementById('_method').value = 'post';
       
@@ -191,12 +191,12 @@
 
     let id = event.target.getAttribute('data-id');
 
-    cardTitleFormSubmit.innerHTML = 'Edit Tanaman Buah';
+    cardTitleFormSubmit.innerHTML = 'Edit Tanaman Obat';
     clearAllInput();
     document.getElementById('id').value = id;
     document.getElementById('_method').value = 'put';
 
-    fetch(`{{ route('tanaman-buah.index') }}/${id}/edit`)
+    fetch(`{{ route('tanaman-obat.index') }}/${id}/edit`)
       .then(res => res.json())
       .then(data => {
         if (data.status) {
@@ -212,10 +212,10 @@
           }
           document.getElementById('tanaman_awal').value = _data.tanaman_awal ?? '';
           document.getElementById('dibongkar').value = _data.dibongkar ?? '';
-          document.getElementById('ditambah').value = _data.ditambah ?? '';
-          document.getElementById('blm_menghasilkan').value = _data.blm_menghasilkan ?? '';
           document.getElementById('sdg_menghasilkan').value = _data.sdg_menghasilkan ?? '';
           document.getElementById('produksi').value = _data.produksi ?? '';
+          document.getElementById('ditambah').value = _data.ditambah ?? '';
+          document.getElementById('luas_rusak').value = _data.luas_rusak ?? '';
         }
     });
 
@@ -235,7 +235,7 @@
       confirmButtonText: 'Ya, Hapus',
       showLoaderOnConfirm: true,
       preConfirm: () => {
-        fetch(`{{ route('tanaman-buah.index') }}/${id}`, {
+        fetch(`{{ route('tanaman-obat.index') }}/${id}`, {
           headers: headersJSON,
           method: 'post',
           body: JSON.stringify({
@@ -275,17 +275,17 @@
       'tahun',
       'tanaman_awal',
       'dibongkar',
-      'ditambah',
-      'blm_menghasilkan',
       'sdg_menghasilkan',
-      'produksi'
+      'ditambah',
+      'produksi',
+      'luas_rusak'
     ], true);
 
     let id = document.getElementById('id').value ?? '';
     let method = document.getElementById('_method').value;
     let url = method == 'put' 
-      ? `{{ route('tanaman-buah.store') }}/${id}`
-      : '{{ route('tanaman-buah.store') }}'
+      ? `{{ route('tanaman-obat.store') }}/${id}`
+      : '{{ route('tanaman-obat.store') }}'
 
     Swal.fire({
       title: 'Simpan Data?',
