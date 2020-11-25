@@ -46,6 +46,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('dokumentasi', 'DokumentasiController')->except('create', 'show');
 
+    Route::group(['prefix' => 'laporan'], function () {
+        Route::get('tanaman-pangan-peternakan', 'LaporanController@tanamanPanganPeternakan')->name('laporan.tanaman-pangan-peternakan.index');
+        Route::post('tanaman-pangan-peternakan', 'LaporanController@tanamanPanganPeternakanPDF')->name('laporan.tanaman-pangan-peternakan.store');
+        Route::get('kepemilikan-lahan-pertanian', 'LaporanController@kepemilikanLahanPertanian')->name('laporan.kepemilikan-lahan-pertanian.index');
+        Route::get('kepemilikan-hewan-ternak', 'LaporanController@kepemilikanHewanTernak')->name('laporan.kepemilikan-hewan-ternak.index');
+    });
+
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
     Route::resource('kelompok-tani', 'KelompokTaniController')->except('create', 'show');

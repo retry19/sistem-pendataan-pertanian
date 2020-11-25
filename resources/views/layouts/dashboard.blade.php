@@ -55,7 +55,7 @@
     <aside class="main-sidebar sidebar-dark-blue elevation-4">
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link navbar-dark">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Pendataan Pertanian</span>
       </a>
 
       <!-- Sidebar -->
@@ -149,6 +149,28 @@
               <a href="{{ route('dokumentasi.index') }}" class="nav-link @if(request()->is('dokumentasi')) active @endif">
                 <i class="nav-icon fas fa-images"></i>
                 <p>Dokumentasi</p>
+              </a>
+            </li>
+            @endcan
+
+            @can('laporan_management_access')
+            <li class="nav-header">LAPORAN</li>
+            <li class="nav-item">
+              <a href="{{ route('laporan.tanaman-pangan-peternakan.index') }}" class="nav-link @if(request()->is('laporan/tanaman-pangan-peternakan')) active @endif">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Tanaman Pangan Peternakan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('laporan.kepemilikan-lahan-pertanian.index') }}" class="nav-link @if(request()->is('laporan/kepemilikan-lahan-pertanian')) active @endif">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Kepemilikan Lahan Pertanian</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('laporan.kepemilikan-hewan-ternak.index') }}" class="nav-link @if(request()->is('laporan/kepemilikan-hewan-ternak')) active @endif">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Kepemilikan Hewan Ternak</p>
               </a>
             </li>
             @endcan
