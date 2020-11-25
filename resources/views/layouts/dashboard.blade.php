@@ -165,7 +165,7 @@
             @can('kelompok_tani_management_access')
             <li class="nav-item">
               <a href="{{ route('kelompok-tani.index') }}" class="nav-link @if(request()->is('kelompok-tani')) active @endif">
-                <i class="nav-icon fas fa-paw"></i>
+                <i class="nav-icon fas fa-child"></i>
                 <p>Kelompok Tani</p>
               </a>
             </li>
