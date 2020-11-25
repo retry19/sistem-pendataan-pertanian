@@ -86,6 +86,42 @@
               </a>
             </li>
             @endcan
+            @if (Gate::check('luas_tanam_read') || Gate::check('tanaman_buah_read') || Gate::check('tanaman_obat_read') || Gate::check('luas_kebun_read'))
+            <li class="nav-item has-treeview @if(request()->is('luas-tanam') || request()->is('tanaman-buah') || request()->is('tanaman-obat') || request()->is('tanaman-kebun')) menu-open @endif">
+              <a href="" class="nav-link @if(request()->is('luas-tanam') || request()->is('tanaman-buah') || request()->is('tanaman-obat') || request()->is('tanaman-kebun')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Jumlah Tanaman <i class="right fas fa-angle-left"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                @can('luas_tanam_read')
+                <li class="nav-item">
+                  <a href="{{ route('luas-tanam.index') }}" class="nav-link @if(request()->is('luas-tanam')) active @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Luas Tanam dan Panen</p>
+                  </a>
+                </li>
+                @endcan
+                <li class="nav-item">
+                  <a href="" class="nav-link @if(request()->is('tanaman-buah')) active @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tanaman Buah</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link @if(request()->is('tanaman-obat')) active @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tanaman Obat</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link @if(request()->is('tanaman-kebun')) active @endif">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tanaman Perkebunan</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            @endif
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>

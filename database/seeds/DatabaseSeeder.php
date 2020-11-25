@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             RoleUserSeeder::class,
             TanamanSeeder::class,
+            JumlahTanamanSeeder::class
         ]);
     }
 }

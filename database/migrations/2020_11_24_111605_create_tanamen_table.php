@@ -27,6 +27,6 @@ class CreateTanamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tanamen');
+        Schema::dropIfExists('tanaman');
     }
 }

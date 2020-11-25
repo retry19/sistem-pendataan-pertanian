@@ -16,6 +16,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('kepemilikan-hewan/{id}', 'KepemilikanHewanController@update')->name('kepemilikan-hewan.update');
     Route::delete('kepemilikan-hewan/{id}', 'KepemilikanHewanController@destroy')->name('kepemilikan-hewan.destroy');
 
+    Route::get('luas-tanam', 'LuasTanamController@index')->name('luas-tanam.index');
+    Route::post('luas-tanam', 'LuasTanamController@store')->name('luas-tanam.store');
+    Route::get('luas-tanam/{id}/edit', 'LuasTanamController@edit')->name('luas-tanam.edit');
+    Route::put('luas-tanam/{id}', 'LuasTanamController@update')->name('luas-tanam.update');
+    Route::delete('luas-tanam/{id}', 'LuasTanamController@destroy')->name('luas-tanam.destroy');
+
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 
