@@ -49,7 +49,12 @@ function clearAllInput() {
   if (document.getElementById('preview-image')) {
     document.getElementById('preview-image').style.display = 'none';
     document.getElementById('preview-image-output').src = '';
-    document.getElementById('image').value = '';
+    if (document.getElementById('image')) {
+      document.getElementById('image').value = '';
+    }
+    if (document.getElementById('gambar')) {
+      document.getElementById('gambar').value = '';
+    }
   }
   
   let elements = document.getElementsByClassName('form-control');

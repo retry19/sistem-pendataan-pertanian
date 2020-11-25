@@ -144,6 +144,14 @@
               </a>
             </li>
             @endcan
+            @can('dokumentasi_read')
+            <li class="nav-item">
+              <a href="{{ route('dokumentasi.index') }}" class="nav-link @if(request()->is('dokumentasi')) active @endif">
+                <i class="nav-icon fas fa-images"></i>
+                <p>Dokumentasi</p>
+              </a>
+            </li>
+            @endcan
 
             @if(Gate::check('tanaman_management_access') || Gate::check('hewan_management_access'))
             <li class="nav-header">LIST</li>
