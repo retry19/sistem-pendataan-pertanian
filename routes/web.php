@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('tanaman-kebun/{id}', 'TanamanKebunController@update')->name('tanaman-kebun.update');
     Route::delete('tanaman-kebun/{id}', 'TanamanKebunController@destroy')->name('tanaman-kebun.destroy');
 
+    Route::resource('organisme-pengganggu', 'OrganismePenggangguController')->except('create', 'show');
+
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 

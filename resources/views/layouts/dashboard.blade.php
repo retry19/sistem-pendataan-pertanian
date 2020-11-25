@@ -128,6 +128,14 @@
               </ul>
             </li>
             @endif
+            @can('organisme_pengganggu_read')
+            <li class="nav-item">
+              <a href="{{ route('organisme-pengganggu.index') }}" class="nav-link @if(request()->is('organisme-pengganggu')) active @endif">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Organisme Pengganggu</p>
+              </a>
+            </li>
+            @endcan
             <li class="nav-item">
               <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
