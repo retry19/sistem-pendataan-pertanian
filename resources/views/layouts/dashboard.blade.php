@@ -136,12 +136,14 @@
               </a>
             </li>
             @endcan
+            @can('kepemilikan_lahan_read')
             <li class="nav-item">
-              <a href="" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
+              <a href="{{ route('kepemilikan-lahan.index') }}" class="nav-link @if(request()->is('kepemilikan-lahan')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
                 <p>Kepemilikan Lahan</p>
               </a>
             </li>
+            @endcan
 
             @if(Gate::check('tanaman_management_access') || Gate::check('hewan_management_access'))
             <li class="nav-header">LIST</li>

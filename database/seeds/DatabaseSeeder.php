@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             JumlahTanamanSeeder::class,
             OrganismePenggangguSeeder::class,
             KelompokTaniSeeder::class,
+            KepemilikanLahanSeeder::class,
         ]);
     }
 }

@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('organisme-pengganggu', 'OrganismePenggangguController')->except('create', 'show');
 
+    Route::resource('kepemilikan-lahan', 'KepemilikanLahanController')->except('create', 'show');
+
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
     Route::resource('kelompok-tani', 'KelompokTaniController')->except('create', 'show');
