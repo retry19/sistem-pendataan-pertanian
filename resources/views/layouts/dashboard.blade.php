@@ -162,6 +162,14 @@
               </a>
             </li>
             @endcan
+            @can('kelompok_tani_management_access')
+            <li class="nav-item">
+              <a href="{{ route('kelompok-tani.index') }}" class="nav-link @if(request()->is('kelompok-tani')) active @endif">
+                <i class="nav-icon fas fa-paw"></i>
+                <p>Kelompok Tani</p>
+              </a>
+            </li>
+            @endcan
 
             @if(Gate::check('quarters_management_access') || Gate::check('users_management_access'))
             <li class="nav-header">PENGATURAN</li>

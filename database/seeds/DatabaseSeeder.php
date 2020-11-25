@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             TanamanSeeder::class,
             JumlahTanamanSeeder::class,
             OrganismePenggangguSeeder::class,
+            KelompokTaniSeeder::class,
         ]);
     }
 }
