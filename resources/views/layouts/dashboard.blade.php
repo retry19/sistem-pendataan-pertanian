@@ -86,7 +86,7 @@
               </a>
             </li>
             @endcan
-            @if (Gate::check('luas_tanam_read') || Gate::check('tanaman_buah_read') || Gate::check('tanaman_obat_read') || Gate::check('luas_kebun_read'))
+            @if (Gate::check('luas_tanam_read') || Gate::check('tanaman_buah_read') || Gate::check('tanaman_obat_read') || Gate::check('tanaman_kebun_read'))
             <li class="nav-item has-treeview @if(request()->is('luas-tanam') || request()->is('tanaman-buah') || request()->is('tanaman-obat') || request()->is('tanaman-kebun')) menu-open @endif">
               <a href="" class="nav-link @if(request()->is('luas-tanam') || request()->is('tanaman-buah') || request()->is('tanaman-obat') || request()->is('tanaman-kebun')) active @endif">
                 <i class="nav-icon fas fa-book"></i>
@@ -101,24 +101,30 @@
                   </a>
                 </li>
                 @endcan
+                @can('tanaman_buah_read')
                 <li class="nav-item">
-                  <a href="" class="nav-link @if(request()->is('tanaman-buah')) active @endif">
+                  <a href="{{ route('tanaman-buah.index') }}" class="nav-link @if(request()->is('tanaman-buah')) active @endif">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Tanaman Buah</p>
                   </a>
                 </li>
+                @endcan
+                @can('tanaman_obat_read')
                 <li class="nav-item">
-                  <a href="" class="nav-link @if(request()->is('tanaman-obat')) active @endif">
+                  <a href="{{ route('tanaman-obat.index') }}" class="nav-link @if(request()->is('tanaman-obat')) active @endif">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Tanaman Obat</p>
                   </a>
                 </li>
+                @endcan
+                @can('tanaman_kebun_read')
                 <li class="nav-item">
-                  <a href="" class="nav-link @if(request()->is('tanaman-kebun')) active @endif">
+                  <a href="{{ route('tanaman-kebun.index') }}" class="nav-link @if(request()->is('tanaman-kebun')) active @endif">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Tanaman Perkebunan</p>
                   </a>
                 </li>
+                @endcan
               </ul>
             </li>
             @endif

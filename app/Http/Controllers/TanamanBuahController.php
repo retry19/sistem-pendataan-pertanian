@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LuasTanamRequest;
+use App\Http\Requests\TanamanBuahRequest;
 use App\JumlahTanaman;
 use App\Quarter;
 use App\Tanaman;
@@ -11,17 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Facades\DataTables;
 
-class LuasTanamController extends Controller
+class TanamanBuahController extends Controller
 {
     public function index(Request $request)
     {
-        abort_unless(Gate::allows('luas_tanam_read'), 403);
+        abort_unless(Gate::allows('tanaman_buah_read'), 403);
 
         if ($request->ajax()) {
             $data = JumlahTanaman::with('user', 'quarter', 'tanaman')
-                ->whereHas('tanaman', fn($q) => $q->where('jenis', 'sawah'));
+                ->whereHas('tanaman', fn($q) => $q->where('jenis', 'buah'));
 
-            if (!Gate::allows('luas_tanam_list')) {
+            if (!Gate::allows('tanaman_buah_list')) {
                 $data->where('tahun', date('Y'))
                     ->where('kuartal_id', Quarter::getIdActived());
             }
@@ -35,11 +35,11 @@ class LuasTanamController extends Controller
                 ->addColumn('tanaman_akhir', fn($row) => $this->sumTanaman($row))
                 ->editColumn('user_id', fn($row) => $row->user->name)
                 ->addColumn('action', function($row) {
-                    if (Gate::allows('luas_tanam_update')) {
+                    if (Gate::allows('tanaman_buah_update')) {
                         $btnEdit = "<button type=\"button\" class=\"btn btn-sm btn-info rounded-lg button-edit\" data-id=\"{$row->id}\" onclick=\"onClickEdit(event)\"><i class=\"fas fa-edit\" data-id=\"{$row->id}\"></i></button> ";
                     }
 
-                    if (Gate::allows('luas_tanam_delete')) {
+                    if (Gate::allows('tanaman_buah_delete')) {
                         $btnDelete = "<button type=\"button\" class=\"btn btn-sm btn-danger rounded-lg button-delete\" data-id=\"{$row->id}\" onclick=\"onClickDelete(event)\"><i class=\"fas fa-trash\" data-id=\"{$row->id}\"></i></button>";
                     }
                     return ($btnEdit ?? '-') . ($btnDelete ?? '-');
@@ -49,16 +49,16 @@ class LuasTanamController extends Controller
         }
 
         $quarters = Quarter::all();
-        $tanaman = Tanaman::where('jenis', 'sawah')
+        $tanaman = Tanaman::where('jenis', 'buah')
             ->get();
 
-        return view('luas-tanam', compact(
+        return view('tanaman-buah', compact(
             'quarters',
             'tanaman'
         ));
     }
 
-    public function store(LuasTanamRequest $request)
+    public function store(TanamanBuahRequest $request)
     {
         $result['status'] = false;
         
@@ -74,7 +74,7 @@ class LuasTanamController extends Controller
         }
 
         if ($this->sumTanaman($request) < 0) {
-            $result['msg'] = 'Jumlah luas tanam akhir minus, harap masukan jumlah luas yang valid.';
+            $result['msg'] = 'Jumlah dari tanaman akhir minus, harap masukan jumlah luas yang valid.';
             return response()->json($result);
         }
 
@@ -82,10 +82,10 @@ class LuasTanamController extends Controller
             'tanaman_id' => $request->tanaman_id,
             'tahun' => $request->tahun ?? date('Y'),
             'tanaman_awal' => $request->tanaman_awal,
-            'sdg_menghasilkan' => $request->sdg_menghasilkan ?? 0,
-            'luas_rusak' => $request->luas_rusak ?? 0,
+            'dibongkar' => $request->dibongkar ?? 0,
             'ditambah' => $request->ditambah ?? 0,
-            'produktifitas' => $request->produktifitas ?? 0,
+            'blm_menghasilkan' => $request->blm_menghasilkan ?? 0,
+            'sdg_menghasilkan' => $request->sdg_menghasilkan ?? 0,
             'produksi' => $request->produksi ?? 0,
             'user_id' => Auth::id(),
             'kuartal_id' => $request->kuartal_id ?? $kuartalId
@@ -97,23 +97,23 @@ class LuasTanamController extends Controller
 
     public function edit($id)
     {
-        $luasTanam = JumlahTanaman::findOrFail($id);
+        $tanamanBuah = JumlahTanaman::findOrFail($id);
 
-        $result['data'] = $luasTanam;
+        $result['data'] = $tanamanBuah;
         $result['status'] = true;
 
         return response()->json($result);
     }
 
-    public function update(LuasTanamRequest $request, $id)
+    public function update(TanamanBuahRequest $request, $id)
     {
         $result['status'] = false;
-        $luasTanam = JumlahTanaman::findOrFail($id);
+        $tanamanBuah = JumlahTanaman::findOrFail($id);
         $kuartalId = Quarter::getIdActived();
         $tanaman = JumlahTanaman::where('tahun', $request->tahun ?? date('Y'))
             ->where('kuartal_id', $request->kuartal_id ?? $kuartalId)
             ->where('tanaman_id', $request->tanaman_id)
-            ->where('id', '!=', $luasTanam->id)
+            ->where('id', '!=', $tanamanBuah->id)
             ->first();
 
         if ($tanaman) {
@@ -122,21 +122,21 @@ class LuasTanamController extends Controller
         }
 
         if ($this->sumTanaman($request) < 0) {
-            $result['msg'] = 'Jumlah luas tanam akhir minus, harap masukan jumlah luas yang valid.';
+            $result['msg'] = 'Jumlah dari tanaman akhir minus, harap masukan jumlah luas yang valid.';
             return response()->json($result);
         }
 
-        $luasTanam->tanaman_id = $request->tanaman_id;
-        $luasTanam->tahun = $request->tahun ?? date('Y');
-        $luasTanam->tanaman_awal = $request->tanaman_awal;
-        $luasTanam->sdg_menghasilkan = $request->sdg_menghasilkan ?? 0;
-        $luasTanam->luas_rusak = $request->luas_rusak ?? 0;
-        $luasTanam->ditambah = $request->ditambah ?? 0;
-        $luasTanam->produktifitas = $request->produktifitas ?? 0;
-        $luasTanam->produksi = $request->produksi ?? 0;
-        $luasTanam->user_id = Auth::id();
-        $luasTanam->kuartal_id = $request->kuartal_id ?? $kuartalId;
-        $luasTanam->save();
+        $tanamanBuah->tanaman_id = $request->tanaman_id;
+        $tanamanBuah->tahun = $request->tahun ?? date('Y');
+        $tanamanBuah->tanaman_awal = $request->tanaman_awal;
+        $tanamanBuah->dibongkar = $request->dibongkar ?? 0;
+        $tanamanBuah->ditambah = $request->ditambah ?? 0;
+        $tanamanBuah->blm_menghasilkan = $request->blm_menghasilkan ?? 0;
+        $tanamanBuah->sdg_menghasilkan = $request->sdg_menghasilkan ?? 0;
+        $tanamanBuah->produksi = $request->produksi ?? 0;
+        $tanamanBuah->user_id = Auth::id();
+        $tanamanBuah->kuartal_id = $request->kuartal_id ?? $kuartalId;
+        $tanamanBuah->save();
 
         $result['status'] = true;
 
@@ -153,8 +153,7 @@ class LuasTanamController extends Controller
     private function sumTanaman($row)
     {
         return ($row->tanaman_awal
-            - $row->sdg_menghasilkan
-            - $row->luas_rusak
+            - $row->dibongkar
             + $row->ditambah);
     }
 }

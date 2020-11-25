@@ -22,6 +22,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('luas-tanam/{id}', 'LuasTanamController@update')->name('luas-tanam.update');
     Route::delete('luas-tanam/{id}', 'LuasTanamController@destroy')->name('luas-tanam.destroy');
 
+    Route::get('tanaman-buah', 'TanamanBuahController@index')->name('tanaman-buah.index');
+    Route::post('tanaman-buah', 'TanamanBuahController@store')->name('tanaman-buah.store');
+    Route::get('tanaman-buah/{id}/edit', 'TanamanBuahController@edit')->name('tanaman-buah.edit');
+    Route::put('tanaman-buah/{id}', 'TanamanBuahController@update')->name('tanaman-buah.update');
+    Route::delete('tanaman-buah/{id}', 'TanamanBuahController@destroy')->name('tanaman-buah.destroy');
+
+    Route::get('tanaman-obat', 'TanamanObatController@index')->name('tanaman-obat.index');
+    Route::post('tanaman-obat', 'TanamanObatController@store')->name('tanaman-obat.store');
+    Route::get('tanaman-obat/{id}/edit', 'TanamanObatController@edit')->name('tanaman-obat.edit');
+    Route::put('tanaman-obat/{id}', 'TanamanObatController@update')->name('tanaman-obat.update');
+    Route::delete('tanaman-obat/{id}', 'TanamanObatController@destroy')->name('tanaman-obat.destroy');
+
+    Route::get('tanaman-kebun', 'TanamanKebunController@index')->name('tanaman-kebun.index');
+    Route::post('tanaman-kebun', 'TanamanKebunController@store')->name('tanaman-kebun.store');
+    Route::get('tanaman-kebun/{id}/edit', 'TanamanKebunController@edit')->name('tanaman-kebun.edit');
+    Route::put('tanaman-kebun/{id}', 'TanamanKebunController@update')->name('tanaman-kebun.update');
+    Route::delete('tanaman-kebun/{id}', 'TanamanKebunController@destroy')->name('tanaman-kebun.destroy');
+
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');
     Route::resource('hewan', 'HewanController')->except('create', 'show');
 
