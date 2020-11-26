@@ -173,6 +173,12 @@
                 <p>Kepemilikan Hewan Ternak</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('laporan.dokumentasi.index') }}" class="nav-link @if(request()->is('laporan/dokumentasi')) active @endif">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Daftar Dokumentasi</p>
+              </a>
+            </li>
             @endcan
 
             @if(Gate::check('tanaman_management_access') || Gate::check('hewan_management_access'))

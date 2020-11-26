@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LaporanDokumentasiRequest;
 use App\Http\Requests\LaporanKepemilikanHewanTernakRequest;
 use App\Http\Requests\LaporanKepemilikanLahanPertanianRequest;
 use App\Http\Requests\LaporanTanamanPanganPeternakanRequest;
+use App\Dokumentasi;
 use App\JumlahKepemilikanHewan;
 use App\JumlahTanaman;
 use App\KepemilikanLahan;
@@ -468,6 +470,54 @@ class LaporanController extends Controller
             $pdf->Cell(32, 10, $kh->jumlah, 1, 0, 'C');
             $pdf->Ln();
         }
+
+        $pdf->Output();
+        exit;
+    }
+
+    public function dokumentasi()
+    {
+        $quarters = Quarter::all();
+
+        return view('laporan.dokumentasi', compact('quarters'));
+    }
+
+    public function dokumentasiPDF(LaporanDokumentasiRequest $request)
+    {
+        $border = 0;
+
+        $dokumentasi = Dokumentasi::where('kuartal_id', $request->kuartal_id)
+            ->whereYear('tanggal', date('Y'))
+            ->get();
+
+        $pdf = new Fpdf;
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->Cell(190, 7, 'DAFTAR DOKUMENTASI PERTANIAN', $border, 1, 'C');       
+        $pdf->SetFont('');
+        $pdf->SetX(75);
+        $pdf->Cell(30, 5, 'Kecamatan', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln();
+        $pdf->SetX(75);
+        $pdf->Cell(30, 5, 'Desa', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln(10);
+
+        $pdf->SetFont('');
+
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        foreach ($dokumentasi as $i => $d) {
+            $no = $i + 1;
+            $pdf->MultiCell(190, 65, $pdf->Image("storage/{$d->gambar}", $pdf->GetX() + 35, $pdf->GetY(), $height = 120), $border, 'C');
+            $pdf->MultiCell(190, 6, "{$no}. {$d->deskripsi}", $border, 'C');
+            $pdf->MultiCell(190, 6, $d->tanggal->format('d F Y'), $border, 'C');
+            $pdf->Ln();
+        }
+
 
         $pdf->Output();
         exit;
