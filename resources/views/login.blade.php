@@ -13,14 +13,17 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: url(images/bg-desa.png) center no-repeat; transparent: 0.4">
   <div class="login-logo" style="width: 450px">
-    <a href="">{{ config('app.name') }}</a>
+    <a class="text-white">{{ config('app.name') }}</a>
   </div>
   <div class="login-box">
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Login untuk administrator</p>
+        <p class="login-box-msg">
+          Login untuk administrator<br> 
+          <small class="text-muted">Silahkan login apabila sudah memiliki akun.</small>
+        </p>
 
         <form id="form">
           <div class="input-group">
