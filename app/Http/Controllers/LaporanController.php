@@ -462,9 +462,9 @@ class LaporanController extends Controller
 
         foreach ($kepemilikanHewan as $i => $kh) {
             $pdf->Cell(10, 10, $i + 1, 1, 0, 'C');
-            $pdf->Cell(40, 10, $kh->blok, 1, 0, 'C');
-            $pdf->Cell(45, 10, $kh->pemilik, 1, 0, 'C');
-            $pdf->Cell(40, 10, $kh->hewan->nama, 1, 0, 'C');
+            $pdf->Cell(40, 10, $kh->blok, 1, 0);
+            $pdf->Cell(45, 10, $kh->pemilik, 1, 0);
+            $pdf->Cell(40, 10, $kh->hewan->nama, 1, 0);
             $pdf->Cell(32, 10, $kh->jumlah, 1, 0, 'C');
             $pdf->Ln();
         }

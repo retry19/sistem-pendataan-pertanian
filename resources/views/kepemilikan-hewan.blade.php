@@ -52,9 +52,25 @@
       </div>
       @endcan
       <div class="form-group row">
-        <label for="blok" class="col-md-2 col-form-label">Blok <span class="text-danger">*</span></label>
+        <label for="blok" class="col-md-2 col-form-label">Nama Blok <span class="text-danger">*</span></label>
         <div class="col-md-10">
-          <input type="text" name="blok" class="form-control form-control-sm w-50" id="blok">
+          <select name="blok" id="blok" class="form-control select2bs4 form-control-sm" style="width: 50%">
+            <option value="">--- Pilih blok ---</option>
+            <option value="tunggul jati">Tunggul Jati</option>
+            <option value="kudu keras">Kudu Keras</option>
+            <option value="cigembor">Cigembor</option>
+            <option value="cikupuk">Cikupuk</option>
+            <option value="cekong">Cekong</option>
+            <option value="pakuwon">Pakuwon</option>
+            <option value="dukuh sajong">Dukuh Sajong</option>
+            <option value="munjul">Munjul</option>
+            <option value="getrak">Getrak</option>
+            <option value="cipiit">Cipiit</option>
+            <option value="cigelap">Cigelap</option>
+            <option value="jambu boll">Jambu Boll</option>
+            <option value="pedem kanyere">Pedem Kanyere</option>
+            <option value="pamagang">Pamagang</option>
+          </select>
           <small class="text-danger" id="error-blok"></small>
         </div>
       </div>
@@ -172,10 +188,12 @@
           if ($('#kuartal_id').length) {
             $('#kuartal_id').val(_data.kuartal_id).trigger('change');
           }
+          if ($('#blok').length) {
+            $('#blok').val(_data.blok).trigger('change');
+          }
           if (document.getElementById('tahun')) {
             document.getElementById('tahun').value = _data.tahun ?? '';
           }
-          document.getElementById('blok').value = _data.blok ?? '';
           document.getElementById('pemilik').value = _data.pemilik ?? '';
           document.getElementById('jumlah').value = _data.jumlah ?? '';
         }
