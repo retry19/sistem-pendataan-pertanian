@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('tanaman-pangan-peternakan', 'LaporanController@tanamanPanganPeternakan')->name('laporan.tanaman-pangan-peternakan.index');
         Route::post('tanaman-pangan-peternakan', 'LaporanController@tanamanPanganPeternakanPDF')->name('laporan.tanaman-pangan-peternakan.store');
         Route::get('kepemilikan-lahan-pertanian', 'LaporanController@kepemilikanLahanPertanian')->name('laporan.kepemilikan-lahan-pertanian.index');
+        Route::post('kepemilikan-lahan-pertanian', 'LaporanController@kepemilikanLahanPertanianPDF')->name('laporan.kepemilikan-lahan-pertanian.store');
         Route::get('kepemilikan-hewan-ternak', 'LaporanController@kepemilikanHewanTernak')->name('laporan.kepemilikan-hewan-ternak.index');
     });
 

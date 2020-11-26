@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LaporanKepemilikanLahanPertanianRequest;
 use App\Http\Requests\LaporanTanamanPanganPeternakanRequest;
 use App\JumlahTanaman;
+use App\KepemilikanLahan;
 use App\Quarter;
 use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -343,7 +345,76 @@ class LaporanController extends Controller
 
     public function kepemilikanLahanPertanian()
     {
-        return view('laporan.kepemilikan-lahan-pertanian');
+        $quarters = Quarter::all();
+
+        return view('laporan.kepemilikan-lahan-pertanian', compact('quarters'));
+    }
+
+    public function kepemilikanLahanPertanianPDF(LaporanKepemilikanLahanPertanianRequest $request)
+    {
+        $border = 0;
+
+        $kepemilikanLahan = KepemilikanLahan::with('quarter', 'kelompokTani')
+            ->where('tahun', $request->tahun)
+            ->where('kuartal_id', $request->kuartal_id)
+            ->get();
+
+        $pdf = new Fpdf;
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->Cell(190, 7, 'DATA PEMILIK LAHAN PERTANIAN', $border, 1, 'C');       
+        $pdf->SetFont('');
+        $pdf->Cell(30, 5, 'Kecamatan', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln();
+        $pdf->Cell(30, 5, 'Desa', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln(10);
+
+        // LAPORAN LUAS TANAM DAN PANEN
+        $y = $pdf->GetY();
+        $pdf->SetFont('Arial','B', 10);
+        $pdf->Cell(7, 15, 'No', 1, 0, 'C');
+        $pdf->Cell(35, 15, 'Nama Blok', 1, 0, 'C');
+        $pdf->Cell(40, 15, 'Nama Pemilik', 1, 0, 'C');
+        $pdf->Cell(32, 5, 'Luas Lahan (ha)', 1, 0, 'C');
+        $pdf->SetXY(92, $y + 5);
+        $pdf->Cell(15, 10, 'Sawah', 1, 0, 'C');
+        $pdf->MultiCell(17, 5, 'Rencana LP2B', 1, 'C');
+        $pdf->SetXY(124, $y);
+        $pdf->Cell(40, 15, 'Alamat Pemilik', 1, 0, 'C');
+        $pdf->Cell(40, 15, 'Nama Kelompok Tani', 1, 0, 'C');
+        $pdf->Ln();
+        
+        $pdf->SetFont('');
+        
+        $totalSawah = 0.0;
+        $totalRencana = 0.0;
+        
+        foreach ($kepemilikanLahan as $i => $kl) {
+            $totalSawah += $kl->luas_sawah;
+            $totalRencana += $kl->luas_rencana;
+            $pdf->Cell(7, 5, $i + 1, 1, 0, 'C');
+            $pdf->Cell(35, 5, $kl->blok, 1, 0);
+            $pdf->Cell(40, 5, $kl->pemilik, 1, 0);
+            $pdf->Cell(15, 5, $kl->luas_sawah, 1, 0, 'C');
+            $pdf->Cell(17, 5, $kl->luas_rencana, 1, 0, 'C');
+            $pdf->Cell(40, 5, $kl->alamat, 1, 0, 'C');
+            $pdf->Cell(40, 5, $kl->kelompokTani->nama, 1, 0, 'C');
+            $pdf->Ln();
+        }
+
+        $pdf->SetFont('Arial', 'B');
+        $pdf->Cell(82, 7, 'Jumlah', 1, 0, 'R');
+        $pdf->Cell(15, 7, $totalSawah, 1, 0, 'C');
+        $pdf->Cell(17, 7, $totalRencana, 1, 0, 'C');
+        $pdf->Cell(80, 7, '', 1, 0, 'C');
+        $pdf->Ln();
+
+        $pdf->Output();
+        exit;
     }
 
     public function kepemilikanHewanTernak()
