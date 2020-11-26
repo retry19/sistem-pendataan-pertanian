@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('kepemilikan-lahan-pertanian', 'LaporanController@kepemilikanLahanPertanian')->name('laporan.kepemilikan-lahan-pertanian.index');
         Route::post('kepemilikan-lahan-pertanian', 'LaporanController@kepemilikanLahanPertanianPDF')->name('laporan.kepemilikan-lahan-pertanian.store');
         Route::get('kepemilikan-hewan-ternak', 'LaporanController@kepemilikanHewanTernak')->name('laporan.kepemilikan-hewan-ternak.index');
+        Route::post('kepemilikan-hewan-ternak', 'LaporanController@kepemilikanHewanTernakPDF')->name('laporan.kepemilikan-hewan-ternak.store');
     });
 
     Route::resource('tanaman', 'TanamanController')->except('create', 'show');

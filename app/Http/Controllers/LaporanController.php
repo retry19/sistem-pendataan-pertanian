@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LaporanKepemilikanHewanTernakRequest;
 use App\Http\Requests\LaporanKepemilikanLahanPertanianRequest;
 use App\Http\Requests\LaporanTanamanPanganPeternakanRequest;
+use App\JumlahKepemilikanHewan;
 use App\JumlahTanaman;
 use App\KepemilikanLahan;
 use App\Quarter;
@@ -419,6 +421,55 @@ class LaporanController extends Controller
 
     public function kepemilikanHewanTernak()
     {
-        return view('laporan.kepemilikan-hewan-ternak');
+        $quarters = Quarter::all();
+
+        return view('laporan.kepemilikan-hewan-ternak', compact('quarters'));
+    }
+
+    public function kepemilikanHewanTernakPDF(LaporanKepemilikanHewanTernakRequest $request)
+    {
+        $border = 0;
+
+        $kepemilikanHewan = JumlahKepemilikanHewan::with('hewan', 'quarter')
+            ->where('kuartal_id', $request->kuartal_id)
+            ->where('tahun', $request->tahun)
+            ->get();
+
+        $pdf = new Fpdf;
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->Cell(190, 7, 'DATA PEMILIK HEWAN TERNAK', $border, 1, 'C');       
+        $pdf->SetFont('');
+        $pdf->Cell(30, 5, 'Kecamatan', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln();
+        $pdf->Cell(30, 5, 'Desa', $border, 0);
+        $pdf->Cell(5, 5, ':', $border, 0);
+        $pdf->Cell(30, 5, 'Ciawigebang', $border, 0);
+        $pdf->Ln(10);
+
+        $y = $pdf->GetY();
+        $pdf->SetFont('Arial','B', 10);
+        $pdf->Cell(10, 10, 'No', 1, 0, 'C');
+        $pdf->Cell(40, 10, 'Nama Blok', 1, 0, 'C');
+        $pdf->Cell(45, 10, 'Nama Pemilik', 1, 0, 'C');
+        $pdf->Cell(40, 10, 'Jenis Hewan', 1, 0, 'C');
+        $pdf->Cell(32, 10, 'Jumlah', 1, 0, 'C');
+        $pdf->Ln();
+        
+        $pdf->SetFont('');
+
+        foreach ($kepemilikanHewan as $i => $kh) {
+            $pdf->Cell(10, 10, $i + 1, 1, 0, 'C');
+            $pdf->Cell(40, 10, $kh->blok, 1, 0, 'C');
+            $pdf->Cell(45, 10, $kh->pemilik, 1, 0, 'C');
+            $pdf->Cell(40, 10, $kh->hewan->nama, 1, 0, 'C');
+            $pdf->Cell(32, 10, $kh->jumlah, 1, 0, 'C');
+            $pdf->Ln();
+        }
+
+        $pdf->Output();
+        exit;
     }
 }
