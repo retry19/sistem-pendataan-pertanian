@@ -58,42 +58,42 @@
       </div>
       @endcan
       <div class="form-group row">
-        <label for="tanaman_awal" class="col-md-3 col-form-label">Tanaman Bulan Lalu <span class="text-danger">*</span></label>
+        <label for="tanaman_awal" class="col-md-3 col-form-label">Tanaman Bulan Lalu <small class="text-muted">(pohon)</small> <span class="text-danger">*</span></label>
         <div class="col-md-9">
           <input type="text" name="tanaman_awal" class="form-control form-control-sm w-25" id="tanaman_awal">
           <small class="text-danger" id="error-tanaman_awal"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="dibongkar" class="col-md-3 col-form-label">Tanaman Dibongkar</label>
+        <label for="dibongkar" class="col-md-3 col-form-label">Tanaman Dibongkar <small class="text-muted">(pohon)</small></label>
         <div class="col-md-9">
           <input type="text" name="dibongkar" class="form-control form-control-sm w-25" id="dibongkar">
           <small class="text-danger" id="error-dibongkar"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="ditambah" class="col-md-3 col-form-label">Tambah Tanam</label>
+        <label for="ditambah" class="col-md-3 col-form-label">Tambah Tanam <small class="text-muted">(pohon)</small></label>
         <div class="col-md-9">
           <input type="text" name="ditambah" class="form-control form-control-sm w-25" id="ditambah">
           <small class="text-danger" id="error-ditambah"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="blm_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Menghasilkan</label>
+        <label for="blm_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Menghasilkan <small class="text-muted">(pohon)</small></label>
         <div class="col-md-9">
           <input type="text" name="blm_menghasilkan" class="form-control form-control-sm w-25" id="blm_menghasilkan">
           <small class="text-danger" id="error-blm_menghasilkan"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Sedang Menghasilkan</label>
+        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Sedang Menghasilkan <small class="text-muted">(pohon)</small></label>
         <div class="col-md-9">
           <input type="text" name="sdg_menghasilkan" class="form-control form-control-sm w-25" id="sdg_menghasilkan">
           <small class="text-danger" id="error-sdg_menghasilkan"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="produksi" class="col-md-3 col-form-label">Produksi</label>
+        <label for="produksi" class="col-md-3 col-form-label">Produksi <small class="text-muted">(ku)</small></label>
         <div class="col-md-9">
           <input type="text" name="produksi" class="form-control form-control-sm w-25" id="produksi">
           <small class="text-danger" id="error-produksi"></small>
@@ -129,13 +129,13 @@
           <th>Jenis Tanaman</th>
           <th>Tahun</th>
           <th>Kuartal</th>
-          <th>Tanaman Bulan Lalu</th>
-          <th>Tanaman Dibongkar</th>
-          <th>Tambah Tanam</th>
-          <th>Tanaman Akhir Bulan</th>
-          <th>Tanaman Belum Menghasilkan</th>
-          <th>Tanaman Sedang Menghasilkan</th>
-          <th>Produksi</th>
+          <th>Tanaman Bulan Lalu <small class="text-muted">(pohon)</small></th>
+          <th>Tanaman Dibongkar <small class="text-muted">(pohon)</small></th>
+          <th>Tambah Tanam <small class="text-muted">(pohon)</small></th>
+          <th>Tanaman Akhir Bulan <small class="text-muted">(pohon)</small></th>
+          <th>Tanaman Belum Menghasilkan <small class="text-muted">(pohon)</small></th>
+          <th>Tanaman Sedang Menghasilkan <small class="text-muted">(pohon)</small></th>
+          <th>Produksi <small class="text-muted">(ku)</small></th>
           <th>Ditambahkan oleh</th>
         </tr>
       </thead>

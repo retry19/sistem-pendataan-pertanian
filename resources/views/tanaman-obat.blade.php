@@ -58,42 +58,42 @@
       </div>
       @endcan
       <div class="form-group row">
-        <label for="tanaman_awal" class="col-md-3 col-form-label">Tanaman Bulan Lalu <span class="text-danger">*</span></label>
+        <label for="tanaman_awal" class="col-md-3 col-form-label">Tanaman Bulan Lalu <small class="text-muted">(m2)</small> <span class="text-danger">*</span></label>
         <div class="col-md-9">
           <input type="text" name="tanaman_awal" class="form-control form-control-sm w-25" id="tanaman_awal">
           <small class="text-danger" id="error-tanaman_awal"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="dibongkar" class="col-md-3 col-form-label">Tanaman Dibongkar</label>
+        <label for="dibongkar" class="col-md-3 col-form-label">Tanaman Dibongkar <small class="text-muted">(m2)</small></label>
         <div class="col-md-9">
           <input type="text" name="dibongkar" class="form-control form-control-sm w-25" id="dibongkar">
           <small class="text-danger" id="error-dibongkar"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Habis</label>
+        <label for="sdg_menghasilkan" class="col-md-3 col-form-label">Tanaman Belum Habis <small class="text-muted">(m2)</small></label>
         <div class="col-md-9">
           <input type="text" name="sdg_menghasilkan" class="form-control form-control-sm w-25" id="sdg_menghasilkan">
           <small class="text-danger" id="error-sdg_menghasilkan"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="luas_rusak" class="col-md-3 col-form-label">Luas Rusak</label>
+        <label for="luas_rusak" class="col-md-3 col-form-label">Luas Rusak <small class="text-muted">(m2)</small></label>
         <div class="col-md-9">
           <input type="text" name="luas_rusak" class="form-control form-control-sm w-25" id="luas_rusak">
           <small class="text-danger" id="error-luas_rusak"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="ditambah" class="col-md-3 col-form-label">Luas Tanaman Baru</label>
+        <label for="ditambah" class="col-md-3 col-form-label">Luas Tanaman Baru <small class="text-muted">(m2)</small></label>
         <div class="col-md-9">
           <input type="text" name="ditambah" class="form-control form-control-sm w-25" id="ditambah">
           <small class="text-danger" id="error-ditambah"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="produksi" class="col-md-3 col-form-label">Produksi</label>
+        <label for="produksi" class="col-md-3 col-form-label">Produksi <small class="text-muted">(kg)</small></label>
         <div class="col-md-9">
           <input type="text" name="produksi" class="form-control form-control-sm w-25" id="produksi">
           <small class="text-danger" id="error-produksi"></small>
@@ -129,13 +129,13 @@
           <th>Jenis Tanaman</th>
           <th>Tahun</th>
           <th>Kuartal</th>
-          <th>Tanaman Bulan Lalu</th>
-          <th>Tanaman Dibongkar</th>
-          <th>Tanaman Belum Habis</th>
-          <th>Luas Rusak</th>
-          <th>Luas Tanaman Baru</th>
-          <th>Luas Tanaman Akhir</th>
-          <th>Produksi</th>
+          <th>Tanaman Bulan Lalu <small class="text-muted">(m2)</small></th>
+          <th>Tanaman Dibongkar <small class="text-muted">(m2)</small></th>
+          <th>Tanaman Belum Habis <small class="text-muted">(m2)</small></th>
+          <th>Luas Rusak <small class="text-muted">(m2)</small></th>
+          <th>Luas Tanaman Baru <small class="text-muted">(m2)</small></th>
+          <th>Luas Tanaman Akhir <small class="text-muted">(m2)</small></th>
+          <th>Produksi <small class="text-muted">(kg)</small></th>
           <th>Ditambahkan oleh</th>
         </tr>
       </thead>
