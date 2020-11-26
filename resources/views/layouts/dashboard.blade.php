@@ -54,8 +54,8 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-blue elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link navbar-dark">
-        <span class="brand-text font-weight-light">Pendataan Pertanian</span>
+      <a href="{{ route('dashboard') }}" class="brand-link navbar-dark">
+        <img src="{{ asset('images/logo-desa_ciawi.png') }}" alt="logo desa ciawigebang" class="w-100">
       </a>
 
       <!-- Sidebar -->
@@ -259,7 +259,7 @@
       <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
               <h1 class="m-0 text-dark">@yield('heading')</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->

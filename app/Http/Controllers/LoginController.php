@@ -21,7 +21,8 @@ class LoginController extends Controller
             $result['redirect_to'] = route('dashboard');
             $result['status'] = true;
         }
-
+        
+        session()->flash('logged', 'Login Berhasil!');
         return response()->json($result);
     }
 

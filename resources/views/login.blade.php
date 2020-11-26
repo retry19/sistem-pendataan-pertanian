@@ -14,10 +14,10 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition login-page">
+  <div class="login-logo" style="width: 450px">
+    <a href="">{{ config('app.name') }}</a>
+  </div>
   <div class="login-box">
-    <div class="login-logo">
-      <a href="">{{ config('app.name') }}</a>
-    </div>
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Login untuk administrator</p>
