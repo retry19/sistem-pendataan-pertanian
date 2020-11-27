@@ -124,10 +124,11 @@
         <div id="accordion">
           <div class="card card-default">
             <div class="card-header">
-              <h4 class="card-title">
+              <h4 class="card-title w-100">
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                   Sistem Pendataan Pertanian Desa Ciawigebang
                 </a>
+                <i class="fas fa-angle-down mt-1 float-right"></i>
               </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in show">
@@ -138,10 +139,11 @@
           </div>
           <div class="card card-default">
             <div class="card-header">
-              <h4 class="card-title">
+              <h4 class="card-title w-100">
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                   Cara Pengisian Data
                 </a>
+                <i class="fas fa-angle-down mt-1 float-right"></i>
               </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
@@ -158,10 +160,11 @@
           </div>
           <div class="card card-default">
             <div class="card-header">
-              <h4 class="card-title">
+              <h4 class="card-title w-100">
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                   Cara Mengubah Data Akun
                 </a>
+                <i class="fas fa-angle-down mt-1 float-right"></i>
               </h4>
             </div>
             <div id="collapseThree" class="panel-collapse collapse">
