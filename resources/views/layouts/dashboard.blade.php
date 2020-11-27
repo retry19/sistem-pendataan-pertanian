@@ -61,7 +61,7 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <nav class="mt-3">
-          <ul class="nav nav-pills nav-sidebar flex-column text-sm" data-widget="treeview" role="menu" data-accordion="false">
+          <ul class="nav nav-pills nav-sidebar flex-column text-sm mb-5" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
               <a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('dashboard')) active @endif">
                 <i class="nav-icon fas fa-columns"></i>
