@@ -15,7 +15,7 @@ class CreateTanamenTable extends Migration
     {
         Schema::create('tanaman', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama', 14);
+            $table->string('nama', 32);
             $table->enum('jenis', ['buah', 'obat', 'kebun', 'sawah']);
         });
     }

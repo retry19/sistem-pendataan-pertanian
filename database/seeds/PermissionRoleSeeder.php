@@ -1,5 +1,6 @@
 <?php
 
+use App\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,9 +13,13 @@ class PermissionRoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('permission_role')->insert([
-            ['permission_id' => 1, 'role_id' => 1],
-            ['permission_id' => 2, 'role_id' => 1],
-        ]);
+        $permissions = Permission::all();
+
+        foreach ($permissions as $idx => $permission) {
+            $arrayPermissionRole[$idx]['permission_id'] = $permission->id;
+            $arrayPermissionRole[$idx]['role_id'] = 1;
+        }
+
+        DB::table('permission_role')->insert($arrayPermissionRole);
     }
 }

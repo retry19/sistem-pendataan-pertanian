@@ -19,7 +19,7 @@ class CreatePopulasiHewansTable extends Migration
     {
         Schema::create('populasi_hewan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('hewan_id');
+            $table->unsignedInteger('hewan_id')->index();
             $table->string('populasi_awal');
             $table->string('lahir');
             $table->string('dipotong');
@@ -27,8 +27,8 @@ class CreatePopulasiHewansTable extends Migration
             $table->string('masuk');
             $table->string('keluar');
             $table->year('tahun');
-            $table->unsignedInteger('user_id')->nullable();
-            $table->unsignedInteger('kuartal_id');
+            $table->unsignedInteger('user_id')->index();
+            $table->unsignedInteger('kuartal_id')->index();
 
             $table->foreign('hewan_id')
                 ->references('id')->on('hewan')
@@ -36,7 +36,7 @@ class CreatePopulasiHewansTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('kuartal_id')
                 ->references('id')->on('quarters')

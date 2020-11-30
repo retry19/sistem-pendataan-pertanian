@@ -18,6 +18,15 @@ class HewanSeeder extends Seeder
             ['nama' => 'Kambing'],
             ['nama' => 'Domba'],
             ['nama' => 'Kuda'],
+            ['nama' => 'Kelinci'],
+            ['nama' => 'Anjing'],
+            ['nama' => 'Ayam Buras'],
+            ['nama' => 'Ayam Ras Pedaging'],
+            ['nama' => 'Ayam Ras Petelur'],
+            ['nama' => 'Itik'],
+            ['nama' => 'Merpati'],
+            ['nama' => 'Puyuh'],
+            ['nama' => 'Entog'],
         ]);
     }
 }

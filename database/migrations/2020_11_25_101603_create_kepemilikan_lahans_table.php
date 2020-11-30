@@ -15,10 +15,25 @@ class CreateKepemilikanLahansTable extends Migration
     {
         Schema::create('kepemilikan_lahan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('blok', 32);
+            $table->enum('blok', [
+                'tunggul jati',
+                'kudu keras',
+                'cigembor',
+                'cikupuk',
+                'cekong',
+                'pakuwon',
+                'dukuh sajong',
+                'munjul',
+                'getrak',
+                'cipiit',
+                'cigelap',
+                'jambu boll',
+                'pedem kanyere',
+                'pamagang',
+            ]);
             $table->string('pemilik', 32);
-            $table->decimal('luas_sawah');
-            $table->decimal('luas_rencana');
+            $table->decimal('luas_sawah', 6, 3);
+            $table->decimal('luas_rencana', 6, 3);
             $table->string('alamat');
             $table->year('tahun');
             $table->unsignedInteger('kelompok_tani_id')->index();

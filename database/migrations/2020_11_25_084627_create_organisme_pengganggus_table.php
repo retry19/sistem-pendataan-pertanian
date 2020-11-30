@@ -17,23 +17,23 @@ class CreateOrganismePengganggusTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('tanaman_id')->index();
             $table->string('bencana', 30);
-            $table->integer('luas_serangan');
+            $table->decimal('luas_serangan', 7, 3);
             $table->string('upaya');
             $table->year('tahun');
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('kuartal_id')->index();
 
-            // $table->foreign('tanaman_id')
-            //     ->references('id')->on('tanaman')
-            //     ->onDelete('cascade');
+            $table->foreign('tanaman_id')
+                ->references('id')->on('tanaman')
+                ->onDelete('cascade');
  
-            // $table->foreign('user_id')
-            //     ->references('id')->on('users')
-            //     ->onDelete('set null');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
  
-            // $table->foreign('kuartal_id')
-            //     ->references('id')->on('quarters')
-            //     ->onDelete('cascade');
+            $table->foreign('kuartal_id')
+                ->references('id')->on('quarters')
+                ->onDelete('cascade');
         });
     }
 

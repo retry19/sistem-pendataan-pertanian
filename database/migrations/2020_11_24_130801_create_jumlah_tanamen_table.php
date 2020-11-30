@@ -16,29 +16,29 @@ class CreateJumlahTanamenTable extends Migration
         Schema::create('jumlah_tanaman', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tanaman_id')->index();
-            $table->integer('tanaman_awal');
-            $table->integer('dibongkar')->nullable();
-            $table->integer('ditambah');
-            $table->integer('blm_menghasilkan')->nullable();
-            $table->integer('sdg_menghasilkan');
-            $table->integer('produksi');
-            $table->integer('luas_rusak')->nullable();
-            $table->integer('produktifitas')->nullable();
+            $table->decimal('tanaman_awal', 6, 3);
+            $table->decimal('dibongkar', 6, 3)->nullable();
+            $table->decimal('ditambah', 6, 3);
+            $table->decimal('blm_menghasilkan', 6, 3)->nullable();
+            $table->decimal('sdg_menghasilkan', 6, 3);
+            $table->decimal('produksi', 7, 3);
+            $table->decimal('luas_rusak', 6, 3)->nullable();
+            $table->decimal('produktifitas', 6, 3)->nullable();
             $table->year('tahun');
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('kuartal_id')->index();
             
-            // $table->foreign('user_id')
-            //     ->references('id')->on('users')
-            //     ->onDelete('set null');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
             
-            // $table->foreign('kuartal_id')
-            //     ->references('id')->on('quarters')
-            //     ->onDelete('cascade');
+            $table->foreign('kuartal_id')
+                ->references('id')->on('quarters')
+                ->onDelete('cascade');
 
-            // $table->foreign('tanaman_id')
-            //     ->references('id')->on('tanaman')
-            //     ->onDelete('cascade');
+            $table->foreign('tanaman_id')
+                ->references('id')->on('tanaman')
+                ->onDelete('cascade');
         });
     }
 

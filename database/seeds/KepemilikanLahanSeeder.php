@@ -16,15 +16,17 @@ class KepemilikanLahanSeeder extends Seeder
     public function run()
     {
         DB::table('kepemilikan_lahan')->insert([
-            'blok' => 'Tunggul Jati',
-            'pemilik' => 'Lorem Ipsum Do.',
-            'luas_sawah' => 0.714,
-            'luas_rencana' => 0.714,
-            'alamat' => 'Ciawigebang',
-            'tahun' => date('Y'),
-            'kelompok_tani_id' => KelompokTani::first()->id,
-            'user_id' => User::first()->id,
-            'kuartal_id' => Quarter::getIdActived()
+            [
+                'blok' => 'tunggul jati',
+                'pemilik' => 'H. Maskar',
+                'luas_sawah' => 0.714,
+                'luas_rencana' => 0.714,
+                'alamat' => 'Ciawigebang',
+                'tahun' => date('Y'),
+                'kelompok_tani_id' => KelompokTani::first()->id,
+                'user_id' => User::first()->id,
+                'kuartal_id' => Quarter::getIdActived()
+            ]
         ]);
     }
 }

@@ -20,7 +20,7 @@ class CreateJumlahKepemilikanHewansTable extends Migration
             $table->string('pemilik', 32);
             $table->integer('jumlah');
             $table->year('tahun');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('kuartal_id')->index();
 
             $table->foreign('hewan_id')
@@ -29,7 +29,7 @@ class CreateJumlahKepemilikanHewansTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('kuartal_id')
                 ->references('id')->on('quarters')

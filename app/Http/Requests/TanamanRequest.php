@@ -24,7 +24,7 @@ class TanamanRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required|string|max:14',
+            'nama' => 'required|string|max:32',
             'jenis' => 'required|string'
         ];
     }

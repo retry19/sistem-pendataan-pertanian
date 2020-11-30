@@ -33,7 +33,7 @@ class HewanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:14',
+            'nama' => 'required|string|max:32',
         ]);
 
         Hewan::create($request->only('nama'));
@@ -52,7 +52,7 @@ class HewanController extends Controller
     public function update(Hewan $hewan, Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:14',
+            'nama' => 'required|string|max:32',
         ]);
 
         $hewan->nama = $request->nama;

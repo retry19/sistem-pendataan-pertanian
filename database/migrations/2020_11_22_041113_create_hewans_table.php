@@ -16,7 +16,7 @@ class CreateHewansTable extends Migration
     {
         Schema::create('hewan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama', 14);
+            $table->string('nama', 32);
         });
     }
 
