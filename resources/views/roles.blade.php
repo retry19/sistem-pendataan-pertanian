@@ -97,7 +97,7 @@
   // Event untuk menampilkan form tambah banner
   let cardFormSubmit = document.getElementById('card-submit');
   document.getElementById('btn-open-card-add').addEventListener('click', function(event) {
-    cardTitleFormSubmit.innerHTML = 'Tambah Permission';
+    cardTitleFormSubmit.innerHTML = 'Tambah Role';
     clearAllInput();
     document.getElementById('_method').value = 'post';
       

@@ -128,7 +128,7 @@
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                   Sistem Pendataan Pertanian Desa Ciawigebang
                 </a>
-                <i class="fas fa-angle-down mt-1 float-right"></i>
+                <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in show">
@@ -143,7 +143,7 @@
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                   Cara Pengisian Data
                 </a>
-                <i class="fas fa-angle-down mt-1 float-right"></i>
+                <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
@@ -164,7 +164,7 @@
                 <a class="text-dark" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                   Cara Mengubah Data Akun
                 </a>
-                <i class="fas fa-angle-down mt-1 float-right"></i>
+                <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
             <div id="collapseThree" class="panel-collapse collapse">
