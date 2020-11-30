@@ -30,6 +30,8 @@ class KepemilikanLahanController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('kelompok_tani_id', fn($row) => $row->kelompokTani->nama)
+                ->editColumn('luas_sawah', fn($row) => (float) $row->luas_sawah)
+                ->editColumn('luas_rencana', fn($row) => (float) $row->luas_rencana)
                 ->addColumn('kuartal', fn($row) => $row->quarter->section)
                 ->editColumn('user_id', fn($row) => $row->user->name)
                 ->addColumn('action', function($row) {

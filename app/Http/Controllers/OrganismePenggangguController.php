@@ -30,6 +30,7 @@ class OrganismePenggangguController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('tanaman_id', fn($row) => $row->tanaman->nama)
+                ->editColumn('luas_serangan', fn($row) => (float) $row->luas_serangan)
                 ->addColumn('kuartal', fn($row) => $row->quarter->section)
                 ->editColumn('user_id', fn($row) => $row->user->name)
                 ->addColumn('action', function($row) {

@@ -31,8 +31,14 @@ class TanamanObatController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('tanaman_id', fn($row) => $row->tanaman->nama)
+                ->editColumn('tanaman_awal', fn($row) => (float) $row->tanaman_awal)
+                ->editColumn('dibongkar', fn($row) => (float) $row->dibongkar)
+                ->editColumn('ditambah', fn($row) => (float) $row->ditambah)
+                ->editColumn('sdg_menghasilkan', fn($row) => (float) $row->sdg_menghasilkan)
+                ->editColumn('produksi', fn($row) => (float) $row->produksi)
+                ->editColumn('luas_rusak', fn($row) => (float) $row->luas_rusak)
                 ->addColumn('kuartal', fn($row) => $row->quarter->section)
-                ->addColumn('tanaman_akhir', fn($row) => $this->sumTanaman($row))
+                ->addColumn('tanaman_akhir', fn($row) => (float) $this->sumTanaman($row))
                 ->editColumn('user_id', fn($row) => $row->user->name)
                 ->addColumn('action', function($row) {
                     if (Gate::allows('tanaman_obat_update')) {
