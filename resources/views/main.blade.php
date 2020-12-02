@@ -121,7 +121,7 @@
         <h3 class="card-title">Tentang Sistem Pendataan Pertanian</h3>
       </div>
       <div class="card-body">
-        <div id="accordion">
+        <div class="accordion" id="accordion">
           <div class="card card-default">
             <div class="card-header">
               <h4 class="card-title w-100">
@@ -131,7 +131,7 @@
                 <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in show">
+            <div id="collapseOne" class="panel-collapse collapse in show" data-parent="#accordion">
               <div class="card-body">
                 <strong>Sistem Pendataan Pertanian Desa Ciawigebang</strong> adalah suatu sistem yang berfungsi untuk mendata pertanian di Desa Ciawigebang, di mana nantinya akan membantu dalam hal pelaporan data pertanian Desa Ciawigebang.
               </div>
@@ -146,7 +146,7 @@
                 <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
+            <div id="collapseTwo" class="panel-collapse collapse" data-parent="#accordion">
               <div class="card-body">
                 <ol>
                   <li>Pada bilah kiri terdapat berbagai macam menu yang dapat dipilih</li>
@@ -167,7 +167,7 @@
                 <i class="fas fa-angle-down mt-1 float-right btn-tool"></i>
               </h4>
             </div>
-            <div id="collapseThree" class="panel-collapse collapse">
+            <div id="collapseThree" class="panel-collapse collapse" data-parent="#accordion">
               <div class="card-body">
                 <ol>
                   <li>Pada pojok kanan atas layar, terdapat ikon orang (user).</li>
