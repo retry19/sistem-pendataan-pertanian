@@ -6,6 +6,7 @@ use App\Hewan;
 use App\JumlahKepemilikanHewan;
 use App\JumlahTanaman;
 use App\KepemilikanLahan;
+use App\PopulasiHewan;
 use App\Quarter;
 use App\Tanaman;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     {
         $kuartalId = Quarter::getIdActived();
 
-        $qtyHewan = JumlahKepemilikanHewan::where('tahun', date('Y'))
+        $qtyHewan = PopulasiHewan::where('tahun', date('Y'))
             ->where('kuartal_id', $kuartalId)
             ->count();
         $qtyLuasLahan = JumlahTanaman::with('tanaman')

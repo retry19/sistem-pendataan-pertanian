@@ -40,7 +40,7 @@
       <div class="form-group row">
         <label for="roles" class="col-md-3 col-form-label">Roles <span class="text-danger">*</span></label>
         <div class="col-md-9">
-          <select name="roles[]" class="form-control select2" multiple="multiple" id="roles" data-placeholder="Pilih permission">
+          <select name="roles[]" class="form-control select2" multiple="multiple" id="roles" data-placeholder="Pilih role">
             @foreach ($roles as $role)
             <option value="{{ $role->id }}">{{ $role->name }}</option>
             @endforeach

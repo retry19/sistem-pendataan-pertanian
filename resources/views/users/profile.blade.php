@@ -35,14 +35,14 @@
       <hr>
       <h5>Ubah Password</h5>
       <div class="form-group row">
-        <label for="password_old" class="col-sm-2 col-form-label">Password lama <span class="text-danger">*</span></label>
+        <label for="password_old" class="col-sm-2 col-form-label">Password lama</label>
         <div class="col-sm-10">
           <input type="password" class="form-control w-50" name="password_old" id="password_old" placeholder="Masukan password lama">
           <small class="text-danger" id="error-password_old"></small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="password" class="col-sm-2 col-form-label">Password Baru <span class="text-danger">*</span></label>
+        <label for="password" class="col-sm-2 col-form-label">Password Baru</label>
         <div class="col-sm-10">
           <input type="password" class="form-control w-50" name="password" id="password" placeholder="Masukan password baru">
           <small class="text-danger" id="error-password"></small>

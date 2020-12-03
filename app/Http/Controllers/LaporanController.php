@@ -10,6 +10,8 @@ use App\Dokumentasi;
 use App\JumlahKepemilikanHewan;
 use App\JumlahTanaman;
 use App\KepemilikanLahan;
+use App\OrganismePengganggu;
+use App\PopulasiHewan;
 use App\Quarter;
 use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -28,6 +30,14 @@ class LaporanController extends Controller
         $border = 0;
 
         $kuartal = Quarter::findOrFail($request->kuartal_id);
+        $peternakan = PopulasiHewan::with('hewan')
+            ->where('tahun', $request->tahun)
+            ->where('kuartal_id', $kuartal->id)
+            ->get();
+        $organismePengganggu = OrganismePengganggu::with('tanaman')
+            ->where('tahun', $request->tahun)
+            ->where('kuartal_id', $kuartal->id)
+            ->get();
         $luasTanam = JumlahTanaman::with('tanaman', 'user', 'quarter')
             ->whereHas('tanaman', fn($q) => $q->where('jenis', 'sawah'))
             ->where('tahun', $request->tahun)
@@ -152,22 +162,25 @@ class LaporanController extends Controller
 
         $pdf->SetFont('');
 
-        $pdf->Cell(7,5,'1',1,0,'C');
-        $pdf->Cell(49,5,'Sapi Potong',1,0);
-        $pdf->Cell(12,5,'10',1,0,'C');
-        $pdf->Cell(11,5,'10',1,0,'C');
-        $pdf->Cell(8,5,'3',1,0,'C');
-        $pdf->Cell(7,5,'3',1,0,'C');
-        $pdf->Cell(8,5,'2',1,0,'C');
-        $pdf->Cell(7,5,'2',1,0,'C');
-        $pdf->Cell(11,5,'10',1,0,'C');
-        $pdf->Cell(10,5,'10',1,0,'C');
-        $pdf->Cell(10,5,'2',1,0,'C');
-        $pdf->Cell(10,5,'2',1,0,'C');
-        $pdf->Cell(10,5,'3',1,0,'C');
-        $pdf->Cell(10,5,'3',1,0,'C');
-        $pdf->Cell(10,5,'5',1,0,'C');
-        $pdf->Cell(10,5,'5',1,0,'C');
+        foreach ($peternakan as $indexP => $p) {
+            $pdf->Cell(7,5,$indexP + 1,1,0,'C');
+            $pdf->Cell(49,5,$p->hewan->nama,1,0);
+            $pdf->Cell(12,5,$p->populasi_awal['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(11,5,$p->populasi_awal['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(8,5,$p->lahir['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(7,5,$p->lahir['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(8,5,$p->dipotong['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(7,5,$p->dipotong['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(11,5,$p->mati['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,$p->mati['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,$p->masuk['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,$p->masuk['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,$p->keluar['jantan'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,$p->keluar['betina'] ?? 0,1,0,'C');
+            $pdf->Cell(10,5,($p->populasi_awal['jantan'] + $p->lahir['jantan'] - $p->dipotong['jantan'] - $p->mati['jantan'] + $p->masuk['jantan'] - $p->keluar['jantan']),1,0,'C');
+            $pdf->Cell(10,5,($p->populasi_awal['betina'] + $p->lahir['betina'] - $p->dipotong['betina'] - $p->mati['betina'] + $p->masuk['betina'] - $p->keluar['betina']),1,0,'C');
+            $pdf->Ln();
+        }
 
         $pdf->Ln(10);
 
@@ -186,12 +199,14 @@ class LaporanController extends Controller
 
         $pdf->SetFont('');
 
-        $pdf->Cell(7, 5, '1', 1, 0, 'C');
-        $pdf->Cell(49, 5, 'Padi', 1, 0);
-        $pdf->Cell(38, 5, 'Hama', 1, 0);
-        $pdf->Cell(22, 5, '5', 1, 0, 'C');
-        $pdf->Cell(74, 5, 'Penyemprotan Anti Hama', 1, 0);
-        $pdf->Ln();
+        foreach ($organismePengganggu as $indexOp => $op) {
+            $pdf->Cell(7, 5, $indexOp + 1, 1, 0, 'C');
+            $pdf->Cell(49, 5, $op->tanaman->nama, 1, 0);
+            $pdf->Cell(38, 5, $op->bencana, 1, 0);
+            $pdf->Cell(22, 5, $op->luas_serangan, 1, 0, 'C');
+            $pdf->Cell(74, 5, $op->upaya, 1, 0);
+            $pdf->Ln();
+        }
 
         $pdf->Ln(10);
         $pdf->Cell(95, 5, 'Mengetahui', $border, 0, 'C');
